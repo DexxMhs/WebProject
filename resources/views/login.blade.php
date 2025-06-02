@@ -3,17 +3,9 @@
 
 @section('login')
 
-    @if(session()->has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session('success') }}
-        </div>
-    @endif
+<!-- pesan notif jika login gagal atau sukses -->
+@include('partials.message')
 
-    @if(session()->has('logingagal'))
-        <div class="alert alert-danger" role="alert">
-            {{ session('logingagal') }}
-        </div>
-    @endif
         <div class="login-form">
             
             <form action="/login" method="POST">
@@ -33,7 +25,7 @@
                 </div>
                 <div class="checkbox">
                     <label class="pull-right">
-                        <a href="#">Lupa Password?</a>
+                        <a href="/forgotpassword">Lupa Password?</a>
                     </label>
                 </div>
                 <button type="submit" class="btn-login">LOGIN</button>
