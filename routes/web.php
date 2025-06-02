@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResetPassword;
+use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\DashboardDaftar;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -27,3 +29,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 
 // Rute untuk menuju Dashboard-Daftar mellaui Controller
 Route::get('/dashboard-daftar', [DashboardDaftar::class, 'index'])->middleware('auth');
+
+
+Route::get('/forgotpassword', [ForgotPassword::class, 'index'])->middleware('guest')->name('password.request');
+Route::post('/forgotpassword', [ForgotPassword::class, 'resetpasswordrequest'])->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPassword:: class, 'resetpassword'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [ResetPassword::class, 'storepassword'])->middleware('guest')->name('password.update');
