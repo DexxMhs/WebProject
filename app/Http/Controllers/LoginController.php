@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('login',[
+        return view('auth.login', [
             "title" => "Login"
         ]);
     }
@@ -17,21 +17,21 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         // mengecek apakah user sudah ada di database atau tidak
-        $credentials = $request-> validate([
+        $credentials = $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required',
         ]);
-            // percobaan user ketika login
-            if(Auth::attempt($credentials)) {
-                $request -> session() -> regenerate();
-                
-                // jika berhasil maka masuk ke halaman dashboard
-                return redirect()-> intended ('dashboard');
-            }
+        // percobaan user ketika login
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            // jika berhasil maka masuk ke halaman dashboard
+            return redirect()->route('dashboard.home');
+        }
 
 
         // jika gagal akan ada pesan gagal login
-        return back()->with('logingagal','Username atau Password Salah!');
+        return back()->with('logingagal', 'Username atau Password Salah!');
     }
 
     public function logout()
@@ -42,6 +42,6 @@ class LoginController extends Controller
 
         request()->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('auth.login');
     }
 }

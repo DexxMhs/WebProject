@@ -27,22 +27,22 @@ class ResetPassword extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
         ]);
-     
+
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user, string $password) {
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
-     
+
                 $user->save();
-     
+
                 event(new PasswordReset($user));
             }
         );
-     
+
         return $status === Password::PasswordReset
-            ? redirect()->route('login')->with('status',('Password anda berhasil di rubah, silahkan login ya!'))
+            ? redirect()->route('auth.login')->with('status', ('Password anda berhasil di rubah, silahkan login ya!'))
             : back()->withErrors(['email' => [__($status)]]);
     }
 }
