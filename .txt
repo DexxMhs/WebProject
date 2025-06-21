@@ -1,0 +1,16 @@
+1. Home Page : 
+    - 1 Banner & Text (Kuliah...? BSI Aja !!)
+    - Apresiasi  1 Baris Auto Scroll
+    - Why UBSI?, Link ke Visi Misi, Tombol Daftar, Foto Orang
+    - Fasilitas foto 3x1, Animasi Scroll memutar tengah nya lebih besar bergantian otomatis & geser sendiri
+    - Footer, Logo, informasi admin, informasi kampus, alamat kampus
+
+2. Profile (Dropdown) :
+    - Visi & Misi
+    - Sambutan Rektor
+    - Lokasi Kampus
+
+3. Fakultas (Dropdown & Page) :
+    - Di Dropdown ada : Nama Nama Fakultas
+    - Judul, keterangan, Card manjang ke bawah
+    - Ketika klik fakultas, akan muncul detail jurusan yang ada pada fakultas tersebut
