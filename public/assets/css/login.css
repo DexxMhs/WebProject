@@ -1,0 +1,39 @@
+body {
+  background-image: url('/images/gedung_login.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ini buat bikin ngeblur backgorund */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/gedung_login.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(2px);
+  z-index: -1;
+}
+
+.login-form {
+  border-radius: 15px;
+}
+
+.btn-login {
+  background-color: #0056b3;
+  color: white;
+  padding: 12px 215px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.btn-login:hover {
+  background-color: #007bff;
+}
