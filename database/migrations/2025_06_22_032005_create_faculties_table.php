@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('study_programs', function (Blueprint $table) {
+        Schema::create('faculties', function (Blueprint $table) {
             $table->id();
-            $table->string('program_name');
-            $table->string('abbreviation');
+            $table->string('code', 10)->unique();         // e.g., FTI, FKIP
+            $table->string('name', 100);                  // e.g., Faculty of Engineering
+            $table->string('image')->nullable();          // Path to logo/image
+            $table->string('description')->nullable();    // Optional description
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('study_programs');
+        Schema::dropIfExists('faculties');
     }
 };

@@ -2,63 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\StudyProgram;
+use App\Models\Faculty;
+use App\Models\DegreeLevel;
+use App\Models\Lecturer;
+use App\Http\Requests\StoreStudyProgramRequest;
+use App\Http\Requests\UpdateStudyProgramRequest;
+use Illuminate\Support\Facades\Storage;
 
 class StudyProgramController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('dashbi');
+        $studyPrograms = StudyProgram::with(['faculty', 'degreeLevel', 'head'])->latest()->get();
+        return view('study_programs.index', compact('studyPrograms'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $faculties = Faculty::all();
+        $degreeLevels = DegreeLevel::all();
+        $lecturers = Lecturer::all();
+
+        return view('study_programs.create', compact('faculties', 'degreeLevels', 'lecturers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreStudyProgramRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('study_programs', 'public');
+        }
+
+        StudyProgram::create($validated);
+
+        return redirect()->route('study_programs.index')->with('success', 'Study program created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(StudyProgram $studyProgram)
     {
-        //
+        $faculties = Faculty::all();
+        $degreeLevels = DegreeLevel::all();
+        $lecturers = Lecturer::all();
+
+        return view('study_programs.edit', compact('studyProgram', 'faculties', 'degreeLevels', 'lecturers'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(UpdateStudyProgramRequest $request, StudyProgram $studyProgram)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            if ($studyProgram->image) {
+                Storage::disk('public')->delete($studyProgram->image);
+            }
+
+            $validated['image'] = $request->file('image')->store('study_programs', 'public');
+        }
+
+        $studyProgram->update($validated);
+
+        return redirect()->route('study_programs.index')->with('success', 'Study program updated successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(StudyProgram $studyProgram)
     {
-        //
-    }
+        if ($studyProgram->image) {
+            Storage::disk('public')->delete($studyProgram->image);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $studyProgram->delete();
+
+        return redirect()->route('study_programs.index')->with('success', 'Study program deleted successfully.');
     }
 }

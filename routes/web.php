@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\StudyProgramController;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +11,7 @@ use App\Http\Controllers\DashboardDaftar;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DegreeLevelController;
 use App\Http\Controllers\StudentProfileController;
 
 
@@ -16,11 +19,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('prg', function () {
+Route::get('/prg', function () {
     return view('prg');
 })->name('prg');
 
-Route::get('fk', function () {
+Route::get('/fk', function () {
     return view('fk');
 })->name('fk');
 // Bisa di isi dengan halaman HOMEPAGE
@@ -53,6 +56,13 @@ Route::post('/dashboard/save-student-candidate', [StudentProfileController::clas
 Route::get('/dashboard/student-registration', [StudentRegistrationController::class, 'index'])->name('dashboard.student-registration')->middleware('auth');
 
 
-// Admin route
-Route::get('/dashboard/study-programs', [StudyProgramController::class, 'index'])->name('dashboard.admin.study-programs')->middleware('auth');
-Route::get('/dashboard/study-programs/create', [StudyProgramController::class, 'create'])->name('dashboard.study-programs.create')->middleware('auth');
+// // Admin route
+Route::prefix('dashboard')
+    ->name('dashboard.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::resource('degree-levels', DegreeLevelController::class);
+        Route::resource('faculties', FacultyController::class);
+        Route::resource('lecturers', LecturerController::class);
+        // Route::resource('/dashboard/study-programs', StudyProgramController::class),
+    });
