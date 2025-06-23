@@ -21,6 +21,18 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Registrasi</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'degree-levels') active @endif">
+                <a href="{{ route('dashboard.degree-levels.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Gelar</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'faculties') active @endif">
+                <a href="{{ route('dashboard.faculties.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Fakultas</a>
+            </li>
         </ul>
     </div>
 </nav>

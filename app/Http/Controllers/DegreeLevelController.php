@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDegreeLevelRequest;
+use App\Http\Requests\UpdateDegreeLevelRequest;
 use App\Models\DegreeLevel;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,12 +12,12 @@ class DegreeLevelController extends Controller
     public function index()
     {
         $degreeLevels = DegreeLevel::latest()->get();
-        return view('degree_levels.index', compact('degreeLevels'));
+        return view('dashboard.admin.degree-levels.index', compact('degreeLevels'));
     }
 
     public function create()
     {
-        return view('degree_levels.create');
+        return view('dashboard.admin.degree-levels.create');
     }
 
     public function store(StoreDegreeLevelRequest $request)
@@ -29,15 +30,15 @@ class DegreeLevelController extends Controller
 
         DegreeLevel::create($validated);
 
-        return redirect()->route('degree_levels.index')->with('success', 'Degree level created successfully.');
+        return redirect()->route('dashboard.degree-levels.index')->with('success', 'Degree level created successfully.');
     }
 
     public function edit(DegreeLevel $degreeLevel)
     {
-        return view('degree_levels.edit', compact('degreeLevel'));
+        return view('dashboard.admin.degree-levels.edit', compact('degreeLevel'));
     }
 
-    public function update(StoreDegreeLevelRequest $request, DegreeLevel $degreeLevel)
+    public function update(UpdateDegreeLevelRequest $request, DegreeLevel $degreeLevel)
     {
         $validated = $request->validated();
 
@@ -51,7 +52,7 @@ class DegreeLevelController extends Controller
 
         $degreeLevel->update($validated);
 
-        return redirect()->route('degree_levels.index')->with('success', 'Degree level updated successfully.');
+        return redirect()->route('dashboard.degree-levels.index')->with('success', 'Degree level updated successfully.');
     }
 
     public function destroy(DegreeLevel $degreeLevel)
@@ -62,6 +63,6 @@ class DegreeLevelController extends Controller
 
         $degreeLevel->delete();
 
-        return redirect()->route('degree_levels.index')->with('success', 'Degree level deleted successfully.');
+        return redirect()->route('dashboard.degree-levels.index')->with('success', 'Degree level deleted successfully.');
     }
 }

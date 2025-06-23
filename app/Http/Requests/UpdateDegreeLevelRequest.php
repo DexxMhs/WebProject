@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreDegreeLevelRequest extends FormRequest
+class UpdateDegreeLevelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,16 @@ class StoreDegreeLevelRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('degree_level')->id;
+
         return [
-            'code' => ['required', 'max:10', Rule::unique('degree_levels')->whereNull('deleted_at')],
+            'code' => [
+                'required',
+                'max:10',
+                Rule::unique('degree_levels')
+                    ->ignore($id)
+                    ->whereNull('deleted_at'),
+            ],
             'name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255',
             'duration_years' => 'nullable|integer|min:1|max:10',

@@ -94,6 +94,10 @@
                 transform: translateX(0);
             }
         }
+
+        .right-panel {
+            height: calc(100vh - 55px);
+        }
     </style>
 </head>
 
