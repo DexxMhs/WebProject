@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nidn', 20)->unique();  // Nomor induk dosen nasional
             $table->string('name', 100);
+            $table->enum('gender', ['male', 'female']);
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
+            $table->text('address')->nullable();
             $table->string('photo')->nullable();  // Profile photo
             $table->foreignId('faculty_id')->nullable()->constrained('faculties')->nullOnDelete(); // optional
             $table->softDeletes();

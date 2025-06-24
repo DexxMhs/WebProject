@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLecturerRequest;
+use App\Http\Requests\UpdateLecturerRequest;
 use App\Models\Lecturer;
 use App\Models\Faculty;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,12 @@ class LecturerController extends Controller
     public function index()
     {
         $lecturers = Lecturer::with('faculty')->latest()->get();
-        return view('lecturers.index', compact('lecturers'));
+        return view('dashboard.admin.lecturers.index', compact('lecturers'));
+    }
+
+    public function show(Lecturer $lecturer)
+    {
+        return view('dashboard.admin.lecturers.show', compact('lecturer'));
     }
 
     public function create()
@@ -40,7 +46,7 @@ class LecturerController extends Controller
         return view('dashboard.admin.lecturers.edit', compact('lecturer', 'faculties'));
     }
 
-    public function update(StoreLecturerRequest $request, Lecturer $lecturer)
+    public function update(UpdateLecturerRequest $request, Lecturer $lecturer)
     {
         $validated = $request->validated();
 

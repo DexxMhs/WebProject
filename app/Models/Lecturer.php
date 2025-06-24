@@ -13,8 +13,10 @@ class Lecturer extends Model
     protected $fillable = [
         'nidn',
         'name',
+        'gender',
         'email',
         'phone',
+        'address',
         'photo',
         'faculty_id',
     ];
@@ -27,5 +29,10 @@ class Lecturer extends Model
     public function coordinatedPrograms()
     {
         return $this->hasMany(StudyProgram::class, 'head_of_program_id');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->photo ? asset('storage/' . $this->photo) : asset('images/default.png');
     }
 }

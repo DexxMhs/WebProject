@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreLecturerRequest extends FormRequest
+class UpdateLecturerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,13 @@ class StoreLecturerRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('lecturer')->id;
+
         return [
             'nidn' => [
                 'required',
                 'max:20',
-                Rule::unique('lecturers')
-                    ->whereNull('deleted_at'), // jika pakai soft delete
+                Rule::unique('lecturers')->ignore($id)->whereNull('deleted_at'),
             ],
             'name' => 'required|string|max:100',
             'gender' => 'required|in:male,female',
@@ -35,8 +36,7 @@ class StoreLecturerRequest extends FormRequest
                 'nullable',
                 'email',
                 'max:255',
-                Rule::unique('lecturers')
-                    ->whereNull('deleted_at'),
+                Rule::unique('lecturers')->ignore($id)->whereNull('deleted_at'),
             ],
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',
@@ -49,23 +49,25 @@ class StoreLecturerRequest extends FormRequest
     {
         return [
             'nidn.required' => 'NIDN is required.',
-            'nidn.unique' => 'This NIDN has already been taken.',
-            'nidn.max' => 'NIDN must not exceed 20 characters.',
+            'nidn.numeric' => 'NIDN must be a number.',
+            'nidn.digits_between' => 'NIDN must be between 5 and 20 digits.',
+            'nidn.unique' => 'This NIDN is already taken.',
 
             'name.required' => 'Lecturer name is required.',
-            'name.max' => 'Lecturer name must not exceed 100 characters.',
+            'name.max' => 'Name must not exceed 100 characters.',
 
-            'gender.required' => 'Lecturer gender is required.',
+            'gender.required' => 'Gender is required.',
             'gender.in' => 'Gender must be either male or female.',
 
-            'email.email' => 'Email format is invalid.',
-            'email.unique' => 'This email is already registered.',
+            'email.email' => 'Email must be a valid email address.',
+            'email.max' => 'Email must not exceed 255 characters.',
+            'email.unique' => 'This email is already taken.',
 
-            'phone.max' => 'Phone number must not exceed 20 characters.',
+            'phone.max' => 'Phone must not exceed 20 characters.',
 
-            'photo.image' => 'Uploaded file must be an image.',
-            'photo.mimes' => 'Only JPG, JPEG, or PNG files are allowed.',
-            'photo.max' => 'Image size must not exceed 2MB.',
+            'photo.image' => 'Photo must be an image file.',
+            'photo.mimes' => 'Photo must be a JPG, JPEG, or PNG file.',
+            'photo.max' => 'Photo size must not exceed 2MB.',
 
             'address.max' => 'Address must not exceed 500 characters.',
 
