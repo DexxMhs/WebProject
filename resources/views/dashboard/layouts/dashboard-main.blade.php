@@ -98,6 +98,10 @@
         .right-panel {
             height: calc(100vh - 55px);
         }
+
+        .req-i {
+            color: #dc3545;
+        }
     </style>
 </head>
 

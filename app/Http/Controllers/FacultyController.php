@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFacultyRequest;
+use App\Http\Requests\UpdateFacultyRequest;
 use App\Models\Faculty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +31,7 @@ class FacultyController extends Controller
 
         Faculty::create($validated);
 
-        return redirect()->route('dashboard.admin.faculties.index')->with('success', 'Faculty created successfully.');
+        return redirect()->route('dashboard.faculties.index')->with('success', 'Faculty created successfully.');
     }
 
     public function edit(Faculty $faculty)
@@ -38,7 +39,7 @@ class FacultyController extends Controller
         return view('dashboard.admin.faculties.edit', compact('faculty'));
     }
 
-    public function update(StoreFacultyRequest $request, Faculty $faculty)
+    public function update(UpdateFacultyRequest  $request, Faculty $faculty)
     {
         $validated = $request->validated();
 
@@ -53,7 +54,7 @@ class FacultyController extends Controller
 
         $faculty->update($validated);
 
-        return redirect()->route('dashboard.admin.faculties.index')->with('success', 'Faculty updated successfully.');
+        return redirect()->route('dashboard.faculties.index')->with('success', 'Faculty updated successfully.');
     }
 
     public function destroy(Faculty $faculty)
@@ -64,6 +65,6 @@ class FacultyController extends Controller
 
         $faculty->delete();
 
-        return redirect()->route('dashboard.admin.faculties.index')->with('success', 'Faculty deleted successfully.');
+        return redirect()->route('dashboard.faculties.index')->with('success', 'Faculty deleted successfully.');
     }
 }

@@ -33,6 +33,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Fakultas</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'lecturers') active @endif">
+                <a href="{{ route('dashboard.lecturers.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Dosen</a>
+            </li>
         </ul>
     </div>
 </nav>

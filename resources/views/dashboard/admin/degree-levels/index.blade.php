@@ -37,6 +37,7 @@
 @endsection
 
 @section('container')
+    @include('dashboard.partials._message')
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">

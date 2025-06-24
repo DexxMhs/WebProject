@@ -1,5 +1,25 @@
 @extends('dashboard.layouts.dashboard-main')
 
+@section('css')
+    <style>
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .btn-primary {
+            margin-top: 0;
+        }
+
+        .img-cell {
+            width: 100px;
+            padding: 0;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+@endsection
+
 @section('breadcrumbs')
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -17,42 +37,54 @@
 @endsection
 
 @section('container')
+    @include('dashboard.partials._message')
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">Data Table</strong>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <strong class="card-title mb-0" style="">Data Fakultas</strong>
+
+                        <a href="{{ route('dashboard.faculties.create') }}" class="btn btn-primary mt-0">Tambah</a>
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Salary</th>
+                                    <th>No.</th>
+                                    <th>Gambar</th>
+                                    <th>Nama Fakultas (Kode)</th>
+                                    <th>Keterangan</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>$170,750</td>
-                                </tr>
-                                <tr>
-                                    <td>Ashton Cox</td>
-                                    <td>Junior Technical Author</td>
-                                    <td>San Francisco</td>
-                                    <td>$86,000</td>
-                                </tr>
+                                @foreach ($faculties as $faculty)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="img-cell">
+                                            @if ($faculty->image)
+                                                <img src="{{ asset('storage/' . $faculty->image) }}" class="card-img-top"
+                                                    alt="{{ $faculty->name }}" style="width: 100px; height: auto;">
+                                            @endif
+                                        </td>
+                                        <td>{{ $faculty->name }} ({{ $faculty->code }})</td>
+                                        <td style="max-width: 800px">{{ $faculty->description }}</td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 5px;">
+                                                <a href="{{ route('dashboard.faculties.edit', $faculty) }}"
+                                                    class="btn btn-outline-primary btn-sm">Edit</a>
+                                                <form action="{{ route('dashboard.faculties.destroy', $faculty) }}"
+                                                    method="POST" class="d-inline"
+                                                    onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

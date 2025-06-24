@@ -18,7 +18,7 @@ class LecturerController extends Controller
     public function create()
     {
         $faculties = Faculty::all();
-        return view('lecturers.create', compact('faculties'));
+        return view('dashboard.admin.lecturers.create', compact('faculties'));
     }
 
     public function store(StoreLecturerRequest $request)
@@ -31,13 +31,13 @@ class LecturerController extends Controller
 
         Lecturer::create($validated);
 
-        return redirect()->route('lecturers.index')->with('success', 'Lecturer created successfully.');
+        return redirect()->route('dashboard.lecturers.index')->with('success', 'Lecturer created successfully.');
     }
 
     public function edit(Lecturer $lecturer)
     {
         $faculties = Faculty::all();
-        return view('lecturers.edit', compact('lecturer', 'faculties'));
+        return view('dashboard.admin.lecturers.edit', compact('lecturer', 'faculties'));
     }
 
     public function update(StoreLecturerRequest $request, Lecturer $lecturer)
@@ -54,7 +54,7 @@ class LecturerController extends Controller
 
         $lecturer->update($validated);
 
-        return redirect()->route('lecturers.index')->with('success', 'Lecturer updated successfully.');
+        return redirect()->route('dashboard.lecturers.index')->with('success', 'Lecturer updated successfully.');
     }
 
     public function destroy(Lecturer $lecturer)
@@ -65,6 +65,6 @@ class LecturerController extends Controller
 
         $lecturer->delete();
 
-        return redirect()->route('lecturers.index')->with('success', 'Lecturer deleted successfully.');
+        return redirect()->route('dashboard.lecturers.index')->with('success', 'Lecturer deleted successfully.');
     }
 }
