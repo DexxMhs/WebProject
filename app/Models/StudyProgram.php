@@ -13,13 +13,20 @@ class StudyProgram extends Model
     protected $fillable = [
         'code',
         'name',
-        'degree_level',
+        'degree_level_id',
         'faculty_id',
         'head_of_program_id',
         'accreditation',
         'established_date',
         'status',
+        'image',
+        'description',
     ];
+
+    public function degreeLevel()
+    {
+        return $this->belongsTo(DegreeLevel::class);
+    }
 
     // Relation to Faculty
     public function faculty()
@@ -27,14 +34,14 @@ class StudyProgram extends Model
         return $this->belongsTo(Faculty::class);
     }
 
-    public function degreeLevel()
-    {
-        return $this->belongsTo(DegreeLevel::class);
-    }
-
     // Relation to Lecturer (as head of program)
     public function headOfProgram()
     {
         return $this->belongsTo(Lecturer::class, 'head_of_program_id');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? asset('storage/' . $this->image) : null;
     }
 }

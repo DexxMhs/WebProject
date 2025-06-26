@@ -96,7 +96,7 @@
         }
 
         .right-panel {
-            height: calc(100vh - 55px);
+            min-height: calc(100vh - 55px);
         }
 
         .req-i {

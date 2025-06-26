@@ -21,6 +21,8 @@ return new class extends Migration
             $table->enum('accreditation', ['A', 'B', 'C', 'Good', 'Very Good', 'Excellent'])->nullable();
             $table->date('established_date')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->string('image')->nullable();          // Path to logo/image
+            $table->string('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -64,5 +64,5 @@ Route::prefix('dashboard')
         Route::resource('degree-levels', DegreeLevelController::class);
         Route::resource('faculties', FacultyController::class);
         Route::resource('lecturers', LecturerController::class);
-        // Route::resource('/dashboard/study-programs', StudyProgramController::class),
+        Route::resource('study-programs', StudyProgramController::class);
     });

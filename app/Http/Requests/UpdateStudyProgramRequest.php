@@ -21,7 +21,7 @@ class UpdateStudyProgramRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('dashboard.study-program')->id;
+        $id = $this->route('study_program')->id;
 
         return [
             'code' => 'required|string|max:10|unique:study_programs,code,' . $id,
@@ -29,7 +29,10 @@ class UpdateStudyProgramRequest extends FormRequest
             'faculty_id' => 'required|exists:faculties,id',
             'degree_level_id' => 'required|exists:degree_levels,id',
             'head_of_program_id' => 'nullable|exists:lecturers,id',
+            'accreditation' => 'nullable',
+            'established_date' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'description' => 'nullable',
         ];
     }
 

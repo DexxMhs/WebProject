@@ -14,8 +14,15 @@ class StudyProgramController extends Controller
 {
     public function index()
     {
-        $studyPrograms = StudyProgram::with(['faculty', 'degreeLevel', 'head'])->latest()->get();
-        return view('study_programs.index', compact('studyPrograms'));
+        $studyPrograms = StudyProgram::with(['faculty', 'degreeLevel', 'headOfProgram'])->latest()->get();
+        return view('dashboard.admin.study-programs.index', compact('studyPrograms'));
+    }
+
+    public function show(StudyProgram $studyProgram)
+    {
+        $studyProgram->load(['faculty', 'degreeLevel', 'headOfProgram']);
+
+        return view('dashboard.admin.study-programs.show', compact('studyProgram'));
     }
 
     public function create()
@@ -24,7 +31,7 @@ class StudyProgramController extends Controller
         $degreeLevels = DegreeLevel::all();
         $lecturers = Lecturer::all();
 
-        return view('study_programs.create', compact('faculties', 'degreeLevels', 'lecturers'));
+        return view('dashboard.admin.study-programs.create', compact('faculties', 'degreeLevels', 'lecturers'));
     }
 
     public function store(StoreStudyProgramRequest $request)
@@ -37,7 +44,7 @@ class StudyProgramController extends Controller
 
         StudyProgram::create($validated);
 
-        return redirect()->route('study_programs.index')->with('success', 'Study program created successfully.');
+        return redirect()->route('dashboard.study-programs.index')->with('success', 'Study program created successfully.');
     }
 
     public function edit(StudyProgram $studyProgram)
@@ -46,7 +53,7 @@ class StudyProgramController extends Controller
         $degreeLevels = DegreeLevel::all();
         $lecturers = Lecturer::all();
 
-        return view('study_programs.edit', compact('studyProgram', 'faculties', 'degreeLevels', 'lecturers'));
+        return view('dashboard.admin.study-programs.edit', compact('studyProgram', 'faculties', 'degreeLevels', 'lecturers'));
     }
 
     public function update(UpdateStudyProgramRequest $request, StudyProgram $studyProgram)
@@ -63,7 +70,7 @@ class StudyProgramController extends Controller
 
         $studyProgram->update($validated);
 
-        return redirect()->route('study_programs.index')->with('success', 'Study program updated successfully.');
+        return redirect()->route('dashboard.study-programs.index')->with('success', 'Study program updated successfully.');
     }
 
     public function destroy(StudyProgram $studyProgram)
@@ -74,6 +81,6 @@ class StudyProgramController extends Controller
 
         $studyProgram->delete();
 
-        return redirect()->route('study_programs.index')->with('success', 'Study program deleted successfully.');
+        return redirect()->route('dashboard.study-programs.index')->with('success', 'Study program deleted successfully.');
     }
 }
