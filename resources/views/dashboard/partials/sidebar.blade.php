@@ -75,6 +75,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Gedung Kampus</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'rooms') active @endif">
+                <a href="{{ route('dashboard.rooms.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Ruang Kelas</a>
+            </li>
         </ul>
     </div>
 </nav>

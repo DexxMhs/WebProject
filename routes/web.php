@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\StudyProgramController;
@@ -75,4 +76,5 @@ Route::prefix('dashboard')
         Route::resource('courses', CourseController::class);
         Route::resource('curriculums', CurriculumController::class);
         Route::resource('buildings', BuildingController::class);
+        Route::resource('rooms', RoomController::class);
     });
