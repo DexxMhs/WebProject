@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Semester extends Model
+class AcademicSemester extends Model
 {
     use SoftDeletes;
 
-    use SoftDeletes;
-
     protected $fillable = [
-        'number',
         'name',
+        'code',
+        'start_date',
+        'end_date',
+        'status',
     ];
 
     public function curriculums()

@@ -51,18 +51,16 @@
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Urutan</th>
+                                    <th>Number</th>
                                     <th>Nama Semester</th>
-                                    <th>Kode Semester</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($semesters as $semester)
+                                @forelse ($semesters as $semester)
                                     <tr>
-                                        <td>{{ $semester->order }}</td>
+                                        <td>{{ $semester->number }}</td>
                                         <td>{{ $semester->name }}</td>
-                                        <td>{{ $semester->code }}</td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 5px;">
                                                 <a href="{{ route('dashboard.semesters.edit', $semester) }}"
@@ -77,7 +75,11 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="3" style="text-align: center;">No semesters found.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_program_semester', function (Blueprint $table) {
+        Schema::create('curriculum', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->foreignId('study_program_id')->constrained()->onDelete('cascade');
-            $table->foreignId('semester_id')->constrained()->onDelete('cascade');
+            $table->foreignId('academic_semester_id')->constrained()->onDelete('cascade'); // periode
+            $table->foreignId('semester_id')->constrained()->onDelete('cascade'); // semester ke-berapa
             $table->timestamps();
-            $table->unique(['course_id', 'study_program_id', 'semester_id'], 'course_studyprogram_semester_unique');
+
+            $table->unique(['course_id', 'study_program_id', 'academic_semester_id', 'semester_id'], 'curriculum_unique');
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_program_semester');
+        Schema::dropIfExists('curriculum');
     }
 };

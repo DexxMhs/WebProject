@@ -11,7 +11,7 @@ class SemesterController extends Controller
 {
     public function index()
     {
-        $semesters = Semester::orderBy('order')->get();
+        $semesters = Semester::orderBy('number')->get();
         return view('dashboard.admin.semesters.index', compact('semesters'));
     }
 

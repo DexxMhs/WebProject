@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('semesters', function (Blueprint $table) {
+        Schema::create('academic_semesters', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('number'); // semester ke-berapa (1, 2, 3...)
-            $table->string('name'); // optional, e.g., Semester 1
+            $table->string('name'); // e.g., Ganjil 2024
+            $table->string('code')->unique(); // e.g., G2024
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('semesters');
+        Schema::dropIfExists('academic_semesters');
     }
 };
