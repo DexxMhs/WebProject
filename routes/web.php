@@ -21,7 +21,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DegreeLevelController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentProfileController;
-
+use App\Http\Controllers\WeeklyScheduleController;
 
 Route::get('/', function () {
     return view('home');
@@ -81,4 +81,5 @@ Route::prefix('dashboard')
         Route::resource('rooms', RoomController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('classes', ClassController::class);
+        Route::resource('weekly-schedules', WeeklyScheduleController::class);
     });

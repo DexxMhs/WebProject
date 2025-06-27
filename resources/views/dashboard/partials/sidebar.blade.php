@@ -93,6 +93,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Kelas</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'weekly-schedules') active @endif">
+                <a href="{{ route('dashboard.weekly-schedules.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Jadwal Mingguan</a>
+            </li>
         </ul>
     </div>
 </nav>

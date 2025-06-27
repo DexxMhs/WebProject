@@ -102,6 +102,10 @@
         .req-i {
             color: #dc3545;
         }
+
+        .navbar .navbar-nav li>a .menu-icon {
+            width: 35px;
+        }
     </style>
 </head>
 
