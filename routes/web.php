@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\StudyProgramController;
 use Illuminate\Support\Facades\Route;
@@ -65,4 +66,5 @@ Route::prefix('dashboard')
         Route::resource('faculties', FacultyController::class);
         Route::resource('lecturers', LecturerController::class);
         Route::resource('study-programs', StudyProgramController::class);
+        Route::resource('semesters', SemesterController::class);
     });

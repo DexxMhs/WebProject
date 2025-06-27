@@ -44,4 +44,18 @@ class StudyProgram extends Model
     {
         return $this->image ? asset('storage/' . $this->image) : null;
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_program_semester')
+            ->withPivot('semester_id')
+            ->withTimestamps();
+    }
+
+    public function semesters()
+    {
+        return $this->belongsToMany(Semester::class, 'course_program_semester')
+            ->withPivot('course_id')
+            ->withTimestamps();
+    }
 }

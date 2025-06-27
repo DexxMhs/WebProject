@@ -45,6 +45,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Program Studi</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'semesters') active @endif">
+                <a href="{{ route('dashboard.semesters.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Semester</a>
+            </li>
         </ul>
     </div>
 </nav>

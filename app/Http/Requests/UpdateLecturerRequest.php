@@ -50,7 +50,7 @@ class UpdateLecturerRequest extends FormRequest
         return [
             'nidn.required' => 'NIDN is required.',
             'nidn.numeric' => 'NIDN must be a number.',
-            'nidn.digits_between' => 'NIDN must be between 5 and 20 digits.',
+            'nidn.max' => 'NIDN must not exceed 20 digits.',
             'nidn.unique' => 'This NIDN is already taken.',
 
             'name.required' => 'Lecturer name is required.',
