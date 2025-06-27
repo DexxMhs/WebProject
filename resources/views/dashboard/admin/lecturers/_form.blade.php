@@ -78,6 +78,36 @@
 </div>
 
 <div class="mb-3">
+    <label for="course_ids" class="form-label">Matkul yang Diajarkan</label>
+    <select name="course_ids[]" class="form-control @error('course_ids') is-invalid @enderror" multiple>
+        @foreach ($courses as $course)
+            <option value="{{ $course->id }}"
+                {{ in_array($course->id, old('course_ids', $lecturer->courses->pluck('id')->toArray() ?? [])) ? 'selected' : '' }}>
+                {{ $course->name }} ({{ $course->code }})
+            </option>
+        @endforeach
+    </select>
+    @error('course_ids')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
+</div>
+
+<div class="mb-3">
+    <label for="building_ids" class="form-label">Tempat Tugas</label>
+    <select name="building_ids[]" class="form-control @error('building_ids') is-invalid @enderror" multiple>
+        @foreach ($buildings as $building)
+            <option value="{{ $building->id }}"
+                {{ in_array($building->id, old('building_ids', $lecturer->buildings->pluck('id')->toArray() ?? [])) ? 'selected' : '' }}>
+                {{ $building->name }} ({{ $building->code }})
+            </option>
+        @endforeach
+    </select>
+    @error('building_ids')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
+</div>
+
+<div class="mb-3">
     <label>Foto</label>
     <input type="file" name="photo" class="form-control-file">
     @if (!empty($lecturer->photo))

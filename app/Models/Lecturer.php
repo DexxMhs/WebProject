@@ -35,4 +35,14 @@ class Lecturer extends Model
     {
         return $this->photo ? asset('storage/' . $this->photo) : asset('images/default.png');
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)->withTimestamps();
+    }
+
+    public function buildings()
+    {
+        return $this->belongsToMany(Building::class)->withTimestamps();
+    }
 }

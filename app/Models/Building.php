@@ -26,4 +26,9 @@ class Building extends Model
     {
         return $this->belongsToMany(StudyProgram::class, 'building_study_program');
     }
+
+    public function lecturers()
+    {
+        return $this->belongsToMany(Lecturer::class)->withTimestamps();
+    }
 }

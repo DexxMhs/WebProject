@@ -27,7 +27,9 @@
                 <div class="card-body">
                     <form action="{{ route('dashboard.lecturers.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @include('dashboard.admin.lecturers._form')
+                        @include('dashboard.admin.lecturers._form', [
+                            'lecturer' => new App\Models\Lecturer(),
+                        ])
                         <button type="submit" class="btn btn-primary" style="margin-top: 0px">Save</button>
                         <a href="{{ route('dashboard.lecturers.index') }}" class="btn btn-secondary">Back</a>
                     </form>

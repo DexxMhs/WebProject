@@ -34,11 +34,24 @@
                 <hr>
                 <ul class="list-group">
                     <li class="list-group-item"><strong>NIDN:</strong> {{ $lecturer->nidn }}</li>
-                    <li class="list-group-item"><strong>Full Name:</strong> {{ $lecturer->name }}</li>
+                    <li class="list-group-item"><strong>Nama:</strong> {{ $lecturer->name }}</li>
                     <li class="list-group-item"><strong>Email:</strong> {{ $lecturer->email }}</li>
-                    <li class="list-group-item"><strong>Phone:</strong> {{ $lecturer->phone }}</li>
+                    <li class="list-group-item"><strong>No. HP:</strong> {{ $lecturer->phone }}</li>
                     <li class="list-group-item"><strong>Gender:</strong> {{ ucfirst($lecturer->gender) }}</li>
-                    <li class="list-group-item"><strong>Address:</strong> {{ $lecturer->address }}</li>
+                    <li class="list-group-item"><strong>Alamat:</strong> {{ $lecturer->address }}</li>
+                    <li class="list-group-item"><strong>Lokasi Bekerja:</strong>
+                        @foreach ($lecturer->buildings as $building)
+                            <span class="badge badge-primary">{{ $building->name }}
+                                ({{ $building->code }})
+                            </span>
+                        @endforeach
+                    </li>
+                    <li class="list-group-item"><strong>Matkul yang Diajarkan:</strong>
+                        @foreach ($lecturer->courses as $course)
+                            <span class="badge badge-primary">{{ $course->name }}
+                            </span>
+                        @endforeach
+                    </li>
                 </ul>
                 <hr>
                 <div class="mt-4" style="display: flex; justify-content: center; align-items: center; gap: 10px;">

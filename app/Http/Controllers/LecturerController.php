@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLecturerRequest;
 use App\Http\Requests\UpdateLecturerRequest;
+use App\Models\Building;
+use App\Models\Course;
 use App\Models\Lecturer;
 use App\Models\Faculty;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +26,9 @@ class LecturerController extends Controller
     public function create()
     {
         $faculties = Faculty::all();
-        return view('dashboard.admin.lecturers.create', compact('faculties'));
+        $courses = Course::all();
+        $buildings = Building::all();
+        return view('dashboard.admin.lecturers.create', compact('faculties', 'courses', 'buildings'));
     }
 
     public function store(StoreLecturerRequest $request)
@@ -35,7 +39,10 @@ class LecturerController extends Controller
             $validated['photo'] = $request->file('photo')->store('lecturers', 'public');
         }
 
-        Lecturer::create($validated);
+        $lecturer = Lecturer::create($validated);
+        $lecturer->courses()->sync($request->input('course_ids', []));
+        $lecturer->buildings()->sync($request->input('building_ids', []));
+
 
         return redirect()->route('dashboard.lecturers.index')->with('success', 'Lecturer created successfully.');
     }
@@ -43,7 +50,9 @@ class LecturerController extends Controller
     public function edit(Lecturer $lecturer)
     {
         $faculties = Faculty::all();
-        return view('dashboard.admin.lecturers.edit', compact('lecturer', 'faculties'));
+        $courses = Course::all();
+        $buildings = Building::all();
+        return view('dashboard.admin.lecturers.edit', compact('lecturer', 'faculties', 'courses', 'buildings'));
     }
 
     public function update(UpdateLecturerRequest $request, Lecturer $lecturer)
@@ -59,6 +68,9 @@ class LecturerController extends Controller
         }
 
         $lecturer->update($validated);
+        $lecturer->courses()->sync($request->input('course_ids', []));
+        $lecturer->buildings()->sync($request->input('building_ids', []));
+
 
         return redirect()->route('dashboard.lecturers.index')->with('success', 'Lecturer updated successfully.');
     }
