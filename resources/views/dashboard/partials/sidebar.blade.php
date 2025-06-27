@@ -57,6 +57,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Semester Akademik</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'courses') active @endif">
+                <a href="{{ route('dashboard.courses.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Mata Kuliah</a>
+            </li>
         </ul>
     </div>
 </nav>
