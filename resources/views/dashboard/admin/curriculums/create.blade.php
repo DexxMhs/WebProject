@@ -25,11 +25,11 @@
                     <strong>Tambah Mata Kuliah</strong>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('dashboard.courses.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.curriculums.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @include('dashboard.admin.courses._form')
+                        @include('dashboard.admin.curriculums._form')
                         <button type="submit" class="btn btn-primary" style="margin-top: 0px">Save</button>
-                        <a href="{{ route('dashboard.courses.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('dashboard.curriculums.index') }}" class="btn btn-secondary">Back</a>
                     </form>
                 </div>
             </div>

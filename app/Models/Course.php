@@ -15,18 +15,8 @@ class Course extends Model
         'credit',
         'description',
     ];
-
-    public function semesters()
+    public function curriculums()
     {
-        return $this->belongsToMany(Semester::class, 'course_program_semester')
-            ->withPivot('study_program_id')
-            ->withTimestamps();
-    }
-
-    public function studyPrograms()
-    {
-        return $this->belongsToMany(StudyProgram::class, 'course_program_semester')
-            ->withPivot('semester_id')
-            ->withTimestamps();
+        return $this->hasMany(Curriculum::class);
     }
 }

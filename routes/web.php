@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicSemesterController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\SemesterController;
@@ -71,4 +72,5 @@ Route::prefix('dashboard')
         Route::resource('semesters', SemesterController::class);
         Route::resource('academic-semesters', AcademicSemesterController::class);
         Route::resource('courses', CourseController::class);
+        Route::resource('curriculums', CurriculumController::class);
     });

@@ -22,14 +22,18 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <strong>Tambah Mata Kuliah</strong>
+                    <strong>Edit Mata Kuliah</strong>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('dashboard.courses.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.curriculums.update', $curriculum) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
-                        @include('dashboard.admin.courses._form')
-                        <button type="submit" class="btn btn-primary" style="margin-top: 0px">Save</button>
-                        <a href="{{ route('dashboard.courses.index') }}" class="btn btn-secondary">Back</a>
+                        @method('PUT')
+                        @include('dashboard.admin.curriculums._form', [
+                            'curriculum' => $curriculum,
+                        ])
+                        <button type="submit" class="btn btn-success" style="margin-top: 0px">Update</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                     </form>
                 </div>
             </div>

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Curriculum extends Model
 {
+    protected $table = 'curriculum';
+
     protected $fillable = [
         'course_id',
         'study_program_id',

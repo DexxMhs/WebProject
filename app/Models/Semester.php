@@ -9,8 +9,6 @@ class Semester extends Model
 {
     use SoftDeletes;
 
-    use SoftDeletes;
-
     protected $fillable = [
         'number',
         'name',
