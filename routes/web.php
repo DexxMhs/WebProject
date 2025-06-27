@@ -18,6 +18,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DegreeLevelController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentProfileController;
 
 
@@ -77,4 +78,5 @@ Route::prefix('dashboard')
         Route::resource('curriculums', CurriculumController::class);
         Route::resource('buildings', BuildingController::class);
         Route::resource('rooms', RoomController::class);
+        Route::resource('roles', RoleController::class);
     });

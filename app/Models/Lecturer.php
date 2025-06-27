@@ -45,4 +45,9 @@ class Lecturer extends Model
     {
         return $this->belongsToMany(Building::class)->withTimestamps();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

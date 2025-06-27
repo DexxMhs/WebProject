@@ -33,10 +33,10 @@ class UpdateLecturerRequest extends FormRequest
             'name' => 'required|string|max:100',
             'gender' => 'required|in:male,female',
             'email' => [
-                'nullable',
+                'required',
                 'email',
                 'max:255',
-                Rule::unique('lecturers')->ignore($id)->whereNull('deleted_at'),
+                Rule::unique('users')->ignore($id),
             ],
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',
@@ -59,6 +59,7 @@ class UpdateLecturerRequest extends FormRequest
             'gender.required' => 'Gender is required.',
             'gender.in' => 'Gender must be either male or female.',
 
+            'email.required' => 'Email is required.',
             'email.email' => 'Email must be a valid email address.',
             'email.max' => 'Email must not exceed 255 characters.',
             'email.unique' => 'This email is already taken.',

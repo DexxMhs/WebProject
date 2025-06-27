@@ -8,6 +8,9 @@ use App\Models\Building;
 use App\Models\Course;
 use App\Models\Lecturer;
 use App\Models\Faculty;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class LecturerController extends Controller
@@ -38,6 +41,21 @@ class LecturerController extends Controller
         if ($request->hasFile('photo')) {
             $validated['photo'] = $request->file('photo')->store('lecturers', 'public');
         }
+
+        // Cari role 'lecturer'
+        $lecturerRole = Role::where('name', 'lecturer')->firstOrFail();
+
+        // Buat akun user terlebih dahulu
+        $user = User::create([
+            'name' => $validated['name'],
+            'role_id' => $lecturerRole->id,
+            'username' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make('123456'), // bisa diganti random + kirim email jika mau
+        ]);
+
+        // Tambahkan relasi user_id ke lecturer
+        $validated['user_id'] = $user->id;
 
         $lecturer = Lecturer::create($validated);
         $lecturer->courses()->sync($request->input('course_ids', []));
