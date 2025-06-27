@@ -49,4 +49,9 @@ class StudyProgram extends Model
     {
         return $this->hasMany(Curriculum::class);
     }
+
+    public function buildings()
+    {
+        return $this->belongsToMany(Building::class, 'building_study_program');
+    }
 }

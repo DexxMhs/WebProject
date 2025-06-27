@@ -64,10 +64,16 @@
                     </i>Data Mata Kuliah</a>
             </li>
 
-            <li class="@if (Request::segment(2) == 'curriculum') active @endif">
+            <li class="@if (Request::segment(2) == 'curriculums') active @endif">
                 <a href="{{ route('dashboard.curriculums.index') }}" class="dropdown-toggle"><i
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Kurikulum</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'buildings') active @endif">
+                <a href="{{ route('dashboard.buildings.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Gedung Kampus</a>
             </li>
         </ul>
     </div>

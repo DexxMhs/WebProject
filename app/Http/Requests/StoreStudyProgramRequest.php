@@ -27,7 +27,10 @@ class StoreStudyProgramRequest extends FormRequest
             'faculty_id' => 'required|exists:faculties,id',
             'degree_level_id' => 'required|exists:degree_levels,id',
             'head_of_program_id' => 'nullable|exists:lecturers,id',
+            'accreditation' => 'nullable',
+            'established_date' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'description' => 'nullable',
         ];
     }
 
