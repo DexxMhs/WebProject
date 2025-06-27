@@ -52,7 +52,7 @@
         @foreach ($studyPrograms as $program)
             <option value="{{ $program->id }}"
                 {{ collect(old('study_program_ids', $building->studyPrograms->pluck('id') ?? []))->contains($program->id) ? 'selected' : '' }}>
-                {{ $program->name }}
+                {{ $program->name }} ({{ $program->code }})
             </option>
         @endforeach
     </select>

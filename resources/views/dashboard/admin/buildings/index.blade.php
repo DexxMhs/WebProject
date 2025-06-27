@@ -76,7 +76,9 @@
                                         <td>{{ $building->name }}</td>
                                         <td>
                                             @foreach ($building->studyPrograms as $program)
-                                                <span class="badge badge-primary">{{ $program->name }}</span>
+                                                <span class="badge badge-primary">{{ $program->name }}
+                                                    ({{ $program->degreeLevel->code }})
+                                                </span>
                                             @endforeach
                                         </td>
                                         <td>{{ $building->address }}</td>
