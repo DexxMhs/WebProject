@@ -51,6 +51,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Semester</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'academic-semesters') active @endif">
+                <a href="{{ route('dashboard.academic-semesters.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Semester Akademik</a>
+            </li>
         </ul>
     </div>
 </nav>
