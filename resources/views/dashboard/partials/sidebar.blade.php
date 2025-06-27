@@ -87,6 +87,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Role</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'classes') active @endif">
+                <a href="{{ route('dashboard.classes.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Kelas</a>
+            </li>
         </ul>
     </div>
 </nav>

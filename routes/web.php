@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicSemesterController;
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\FacultyController;
@@ -79,4 +80,5 @@ Route::prefix('dashboard')
         Route::resource('buildings', BuildingController::class);
         Route::resource('rooms', RoomController::class);
         Route::resource('roles', RoleController::class);
+        Route::resource('classes', ClassController::class);
     });
