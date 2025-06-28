@@ -24,4 +24,14 @@ class Course extends Model
     {
         return $this->belongsToMany(Lecturer::class)->withTimestamps();
     }
+
+    public function studyPrograms()
+    {
+        return $this->belongsToMany(
+            \App\Models\StudyProgram::class,
+            'curriculum',
+            'course_id',
+            'study_program_id'
+        );
+    }
 }

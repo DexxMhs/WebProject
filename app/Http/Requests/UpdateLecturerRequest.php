@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateLecturerRequest extends FormRequest
@@ -23,6 +24,8 @@ class UpdateLecturerRequest extends FormRequest
     public function rules(): array
     {
         $id = $this->route('lecturer')->id;
+        $lecturer = $this->route('lecturer');
+        $user_id = $lecturer?->user?->id;
 
         return [
             'nidn' => [
@@ -36,7 +39,7 @@ class UpdateLecturerRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($id),
+                Rule::unique('users')->ignore($user_id),
             ],
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',

@@ -28,9 +28,10 @@
                     <form action="{{ route('dashboard.weekly-schedules.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        @include('dashboard.admin.weekly-schedules._form', [
+                        @livewire('weekly-schedule-form')
+                        {{-- @include('dashboard.admin.weekly-schedules._form', [
                             'weeklySchedule' => new \App\Models\WeeklySchedule(),
-                        ])
+                        ]) --}}
                         <button type="submit" class="btn btn-primary" style="margin-top: 0px">Save</button>
                         <a href="{{ route('dashboard.weekly-schedules.index') }}" class="btn btn-secondary">Back</a>
                     </form>

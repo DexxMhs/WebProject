@@ -19,6 +19,7 @@ class Lecturer extends Model
         'address',
         'photo',
         'faculty_id',
+        'user_id',
     ];
 
     public function faculty()

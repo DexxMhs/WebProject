@@ -61,7 +61,6 @@ class LecturerController extends Controller
         $lecturer->courses()->sync($request->input('course_ids', []));
         $lecturer->buildings()->sync($request->input('building_ids', []));
 
-
         return redirect()->route('dashboard.lecturers.index')->with('success', 'Lecturer created successfully.');
     }
 

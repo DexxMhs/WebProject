@@ -21,6 +21,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DegreeLevelController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentProfileController;
+use App\Http\Controllers\StudentRegistrationProgramController;
 use App\Http\Controllers\WeeklyScheduleController;
 
 Route::get('/', function () {
@@ -61,8 +62,8 @@ Route::get('/dashboard/home', [DashboardController::class, 'index'])->name('dash
 Route::get('/dashboard/student-profile', [StudentProfileController::class, 'index'])->name('dashboard.student-profile')->middleware('auth');
 Route::post('/dashboard/save-student-candidate', [StudentProfileController::class, 'saveStudentCandidateTemp'])->name('dashboard.saveStudentCandidate')->middleware('auth');
 
-Route::get('/dashboard/student-registration', [StudentRegistrationController::class, 'index'])->name('dashboard.student-registration')->middleware('auth');
-
+Route::get('/dashboard/student-registration', [StudentRegistrationProgramController::class, 'create'])->name('dashboard.student-registration')->middleware('auth');
+Route::post('/dashboard/student-registration', [StudentRegistrationProgramController::class, 'store'])->name('dashboard.student-registration.store')->middleware('auth');
 
 // // Admin route
 Route::prefix('dashboard')

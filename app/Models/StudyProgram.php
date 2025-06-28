@@ -54,4 +54,14 @@ class StudyProgram extends Model
     {
         return $this->belongsToMany(Building::class, 'building_study_program');
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(
+            \App\Models\Course::class,
+            'curriculum',
+            'study_program_id',
+            'course_id'
+        );
+    }
 }

@@ -22,6 +22,8 @@ class StudentCandidateTemp extends Model
         'address',
         'email',
         'phone_number',
+        'building_id',
+        'study_program_id',
     ];
 
     public function user()
