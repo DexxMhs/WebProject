@@ -31,4 +31,9 @@ class ClassModel extends Model
     {
         return $this->hasMany(WeeklySchedule::class, 'class_id');
     }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'class_id');
+    }
 }

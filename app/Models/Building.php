@@ -31,4 +31,9 @@ class Building extends Model
     {
         return $this->belongsToMany(Lecturer::class)->withTimestamps();
     }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }

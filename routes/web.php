@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicSemesterController;
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\CandidateVerificationController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CurriculumController;
@@ -83,4 +84,9 @@ Route::prefix('dashboard')
         Route::resource('roles', RoleController::class);
         Route::resource('classes', ClassController::class);
         Route::resource('weekly-schedules', WeeklyScheduleController::class);
+        Route::get('student-candidates', [CandidateVerificationController::class, 'index'])->name('student-candidates.index');
+        Route::get('student-candidates/{candidate}', [CandidateVerificationController::class, 'show'])->name('student-candidates.show');
+        Route::get('student-candidates/{candidate}/accept', [CandidateVerificationController::class, 'showAcceptForm'])->name('student-candidates.accept-form');
+        Route::put('student-candidates/{candidate}/accept', [CandidateVerificationController::class, 'accept'])->name('student-candidates.accept');
+        Route::post('student-candidates/{candidate}/decline', [CandidateVerificationController::class, 'decline'])->name('student-candidates.decline');
     });

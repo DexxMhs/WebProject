@@ -64,4 +64,9 @@ class StudyProgram extends Model
             'course_id'
         );
     }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }

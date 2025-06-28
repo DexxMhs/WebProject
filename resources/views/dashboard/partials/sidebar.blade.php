@@ -99,6 +99,12 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Jadwal Mingguan</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'student-candidates') active @endif">
+                <a href="{{ route('dashboard.student-candidates.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Calon Mahasiswa</a>
+            </li>
         </ul>
     </div>
 </nav>
