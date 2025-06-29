@@ -8,18 +8,23 @@ use App\Models\DegreeLevel;
 use App\Models\Lecturer;
 use App\Http\Requests\StoreStudyProgramRequest;
 use App\Http\Requests\UpdateStudyProgramRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 
 class StudyProgramController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('view_study-programs');
         $studyPrograms = StudyProgram::with(['faculty', 'degreeLevel', 'headOfProgram'])->latest()->get();
         return view('dashboard.admin.study-programs.index', compact('studyPrograms'));
     }
 
     public function show(StudyProgram $studyProgram)
     {
+        $this->authorize('view_study-programs');
         $studyProgram->load(['faculty', 'degreeLevel', 'headOfProgram']);
 
         return view('dashboard.admin.study-programs.show', compact('studyProgram'));
@@ -27,6 +32,7 @@ class StudyProgramController extends Controller
 
     public function create()
     {
+        $this->authorize('create_study-programs');
         $faculties = Faculty::all();
         $degreeLevels = DegreeLevel::all();
         $lecturers = Lecturer::all();
@@ -49,6 +55,7 @@ class StudyProgramController extends Controller
 
     public function edit(StudyProgram $studyProgram)
     {
+        $this->authorize('edit_study-programs');
         $faculties = Faculty::all();
         $degreeLevels = DegreeLevel::all();
         $lecturers = Lecturer::all();
@@ -75,6 +82,7 @@ class StudyProgramController extends Controller
 
     public function destroy(StudyProgram $studyProgram)
     {
+        $this->authorize('delete_study-programs');
         if ($studyProgram->image) {
             Storage::disk('public')->delete($studyProgram->image);
         }

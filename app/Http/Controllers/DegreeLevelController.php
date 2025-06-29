@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDegreeLevelRequest;
 use App\Http\Requests\UpdateDegreeLevelRequest;
 use App\Models\DegreeLevel;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class DegreeLevelController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
+        $this->authorize('view_degree-levels');
         $degreeLevels = DegreeLevel::latest()->get();
         return view('dashboard.admin.degree-levels.index', compact('degreeLevels'));
     }
 
     public function create()
     {
+        $this->authorize('edit_degree-levels');
         return view('dashboard.admin.degree-levels.create');
     }
 
@@ -35,6 +40,7 @@ class DegreeLevelController extends Controller
 
     public function edit(DegreeLevel $degreeLevel)
     {
+        $this->authorize('edit_degree-levels');
         return view('dashboard.admin.degree-levels.edit', compact('degreeLevel'));
     }
 
@@ -57,6 +63,7 @@ class DegreeLevelController extends Controller
 
     public function destroy(DegreeLevel $degreeLevel)
     {
+        $this->authorize('delete_degree-levels');
         if ($degreeLevel->image) {
             Storage::disk('public')->delete($degreeLevel->image);
         }

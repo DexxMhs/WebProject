@@ -20,7 +20,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'role_id',
-        'nikktp',
         'username',
         'email',
         'password',
@@ -68,5 +67,15 @@ class User extends Authenticatable
     public function student()
     {
         return $this->hasOne(Student::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role()->where('name', $role)->exists();
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->role && $this->role->permissions->contains('name', $permission);
     }
 }

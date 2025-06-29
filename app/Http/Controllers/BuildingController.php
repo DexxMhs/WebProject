@@ -4,20 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Building;
 use App\Models\StudyProgram;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 
 class BuildingController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('view_buildings');
         $buildings = Building::with('studyPrograms')->latest()->get();
         return view('dashboard.admin.buildings.index', compact('buildings'));
     }
 
     public function create()
     {
+        $this->authorize('create_buildings');
         $studyPrograms = StudyProgram::all();
         return view('dashboard.admin.buildings.create', compact('studyPrograms'));
     }
@@ -38,6 +43,7 @@ class BuildingController extends Controller
 
     public function edit(Building $building)
     {
+        $this->authorize('edit_buildings');
         $studyPrograms = StudyProgram::all();
         return view('dashboard.admin.buildings.edit', compact('building', 'studyPrograms'));
     }
@@ -61,6 +67,7 @@ class BuildingController extends Controller
 
     public function destroy(Building $building)
     {
+        $this->authorize('delete_buildings');
         if ($building->photo) {
             Storage::disk('public')->delete($building->photo);
         }

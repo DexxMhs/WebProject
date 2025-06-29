@@ -7,7 +7,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Semester</h1>
+                            <h1>Permission</h1>
                         </div>
                     </div>
                 </div>
@@ -22,15 +22,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <strong>Tambah Semester</strong>
+                    <strong>Tambah Permission</strong>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('dashboard.academic-semesters.store') }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.permissions.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @include('dashboard.admin.academic-semesters._form')
+                        @include('dashboard.admin.permissions._form')
                         <button type="submit" class="btn btn-primary" style="margin-top: 0px">Save</button>
-                        <a href="{{ route('dashboard.academic-semesters.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('dashboard.permissions.index') }}" class="btn btn-secondary">Back</a>
                     </form>
                 </div>
             </div>

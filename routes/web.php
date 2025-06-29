@@ -21,6 +21,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DegreeLevelController;
 use App\Http\Controllers\LecturerWeeklyScheduleController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentProfileController;
 use App\Http\Controllers\StudentRegistrationProgramController;
@@ -65,14 +67,14 @@ Route::get('/dashboard/home', [DashboardController::class, 'index'])->name('dash
 Route::get('/dashboard/student-profile', [StudentProfileController::class, 'index'])->name('dashboard.student-profile')->middleware('auth');
 Route::post('/dashboard/save-student-candidate', [StudentProfileController::class, 'saveStudentCandidateTemp'])->name('dashboard.saveStudentCandidate')->middleware('auth');
 
-Route::get('/dashboard/student-registration', [StudentRegistrationProgramController::class, 'create'])->name('dashboard.student-registration')->middleware('auth');
-Route::post('/dashboard/student-registration', [StudentRegistrationProgramController::class, 'store'])->name('dashboard.student-registration.store')->middleware('auth');
 
 // // Admin route
 Route::prefix('dashboard')
     ->name('dashboard.')
     ->middleware('auth')
     ->group(function () {
+        Route::get('student-registration', [StudentRegistrationProgramController::class, 'create'])->name('student-registration');
+        Route::post('student-registration', [StudentRegistrationProgramController::class, 'store'])->name('student-registration.store');
         Route::resource('degree-levels', DegreeLevelController::class);
         Route::resource('faculties', FacultyController::class);
         Route::resource('lecturers', LecturerController::class);
@@ -86,6 +88,7 @@ Route::prefix('dashboard')
         Route::resource('roles', RoleController::class);
         Route::resource('classes', ClassController::class);
         Route::resource('weekly-schedules', WeeklyScheduleController::class);
+        Route::resource('permissions', PermissionController::class);
         Route::get('student-weekly-schedules', [StudentWeeklyScheduleController::class, 'index'])->name('student-weekly-schedules.index');
         Route::get('lecturer-weekly-schedules', [LecturerWeeklyScheduleController::class, 'index'])->name('lecturer-weekly-schedules.index');
         Route::get('student-candidates', [CandidateVerificationController::class, 'index'])->name('student-candidates.index');

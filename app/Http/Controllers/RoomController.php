@@ -6,17 +6,22 @@ use App\Models\Room;
 use App\Models\Building;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RoomController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('view_rooms');
         $rooms = Room::with('building')->latest()->get();
         return view('dashboard.admin.rooms.index', compact('rooms'));
     }
 
     public function create()
     {
+        $this->authorize('create_rooms');
         $buildings = Building::all();
         return view('dashboard.admin.rooms.create', compact('buildings'));
     }
@@ -30,6 +35,7 @@ class RoomController extends Controller
 
     public function edit(Room $room)
     {
+        $this->authorize('edit_rooms');
         $buildings = Building::all();
         return view('dashboard.admin.rooms.edit', compact('room', 'buildings'));
     }
@@ -43,6 +49,7 @@ class RoomController extends Controller
 
     public function destroy(Room $room)
     {
+        $this->authorize('delete_rooms');
         $room->delete();
 
         return redirect()->route('dashboard.rooms.index')->with('success', 'Room deleted successfully.');

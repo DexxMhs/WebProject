@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Models\Semester;
 use App\Http\Requests\StoreSemesterRequest;
@@ -9,14 +10,18 @@ use App\Http\Requests\UpdateSemesterRequest;
 
 class SemesterController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('view_semesters');
         $semesters = Semester::orderBy('number')->get();
         return view('dashboard.admin.semesters.index', compact('semesters'));
     }
 
     public function create()
     {
+        $this->authorize('create_semesters');
         return view('dashboard.admin.semesters.create');
     }
 
@@ -30,6 +35,7 @@ class SemesterController extends Controller
 
     public function edit(Semester $semester)
     {
+        $this->authorize('edit_semesters');
         return view('dashboard.admin.semesters.edit', compact('semester'));
     }
 
@@ -43,6 +49,7 @@ class SemesterController extends Controller
 
     public function destroy(Semester $semester)
     {
+        $this->authorize('delete_semesters');
         $semester->delete();
 
         return redirect()->route('dashboard.semesters.index')

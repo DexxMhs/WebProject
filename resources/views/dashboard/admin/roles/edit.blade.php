@@ -25,12 +25,12 @@
                     <strong>Edit Role</strong>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('dashboard.roles.update', $role) }}" method="POST"
+                    <form action="{{ route('dashboard.roles.update', $getRecord->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         @include('dashboard.admin.roles._form', [
-                            'role' => $role,
+                            'role' => $getRecord,
                         ])
                         <button type="submit" class="btn btn-success" style="margin-top: 0px">Update</button>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>

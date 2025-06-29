@@ -8,7 +8,22 @@
                 <a href="{{ route('dashboard.home') }}" class="dropdown-toggle"><i class="menu-icon fa fa-laptop">
                     </i>Beranda</a>
             </li>
-            <li class="@if (Request::segment(2) == 'student-profile') active @endif">
+
+            @foreach (config('menu') as $menu)
+                @permission($menu['permission'])
+                    @foreach ($menu['routes'] as $item)
+                        @if ($menu['permission'] == $item['permission'])
+                            <li class="@if (Request::segment(2) == $menu['segment']) active @endif">
+                                <a href="{{ route($item['route']) }}" class="dropdown-toggle"><i
+                                        class="menu-icon fa fa-id-badge">
+                                    </i>{{ $menu['label'] }}</a>
+                            </li>
+                        @endif
+                    @endforeach
+                @endpermission
+            @endforeach
+
+            {{-- <li class="@if (Request::segment(2) == 'student-profile') active @endif">
                 <!-- Belom gua isi ini bray halaman menuanya -->
                 <a href="{{ route('dashboard.student-profile') }}" class="dropdown-toggle"><i
                         class="menu-icon fa fa-id-badge">
@@ -100,6 +115,12 @@
                     </i>Data Jadwal Mingguan</a>
             </li>
 
+            <li class="@if (Request::segment(2) == 'permissions') active @endif">
+                <a href="{{ route('dashboard.permissions.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Permission</a>
+            </li>
+
             <li class="@if (Request::segment(2) == 'student-candidates') active @endif">
                 <a href="{{ route('dashboard.student-candidates.index') }}" class="dropdown-toggle"><i
                         class="menu-icon fa fa fa-id-card-o">
@@ -116,7 +137,7 @@
                 <a href="{{ route('dashboard.lecturer-weekly-schedules.index') }}" class="dropdown-toggle"><i
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Jadwal Mengajar</a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </nav>

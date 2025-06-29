@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Repositories\StudentCandidateTempRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class StundentProfile extends Component
@@ -128,7 +129,10 @@ class StundentProfile extends Component
         // Atur rules per slide
         switch ($slideNumber) {
             case 1: // Slide Data Diri
-                if ((!empty($this->nik) && !empty($this->email)) && ($this->nik == $studentData->nik || $this->email == $studentData->email)) {
+                $sameNik = $studentData && $this->nik == $studentData->nik;
+                $sameEmail = $studentData && $this->email == $studentData->email;
+                $user_id = Auth::id();
+                if ((!empty($this->nik) && !empty($this->email))  && ($sameNik || $sameEmail)) {
                     return [
                         'full_name'         => 'required|string|max:255',
                         'gender'            => 'required|in:male,female',
@@ -151,7 +155,12 @@ class StundentProfile extends Component
                         'citizenship'       => 'required|string|max:255',
                         'nik'               => 'required|digits:16|numeric|unique:student_candidate_temps,nik',
                         'address'           => 'required|string|max:500',
-                        'email'             => 'required|email|max:255|unique:users,email',
+                        'email'             => [
+                            'required',
+                            'email',
+                            'max:255',
+                            Rule::unique('lecturers')->ignore($user_id)
+                        ],
                         'phone_number'      => 'required',
                     ];
                 }
@@ -186,7 +195,9 @@ class StundentProfile extends Component
         // Atur rules per slide
         switch ($slideNumber) {
             case 1: // Slide Data Diri
-                if ((!empty($this->nik) && !empty($this->email)) && ($this->nik == $studentData->nik || $this->email == $studentData->email)) {
+                $sameNik = $studentData && $this->nik == $studentData->nik;
+                $sameEmail = $studentData && $this->email == $studentData->email;
+                if ((!empty($this->nik) && !empty($this->email))  && ($sameNik || $sameEmail)) {
                     return [
                         'full_name.required'         => 'Nama lengkap wajib diisi.',
                         'full_name.string'           => 'Nama lengkap harus berupa teks.',

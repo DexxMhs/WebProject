@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -9,7 +10,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('daftar', [
+        return view('auth.daftar', [
             'title' => "Daftar"
         ]);
     }
@@ -19,7 +20,6 @@ class RegisterController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required|unique:users|min:3|max:255',
-            'nikktp' => 'required|unique:users|max:16',
             'username' => 'required|unique:users|min:3|max:255',
             'email' => 'required|email:dns|max:255',
             'password' => 'required|min:3'
@@ -27,6 +27,13 @@ class RegisterController extends Controller
 
         // User Create adalah untuk membuat user baru yang akan di kirim ke database
         User::create($validateData);
+
+        // Cari role 'student'
+        $guestRole = Role::where('name', 'guest')->firstOrFail();
+
+        User::update([
+            'role_id' => $guestRole->id,
+        ]);
 
         $request->session()->flash('success', 'Registrasi berhasil! Silahkan Login!');
 

@@ -10,24 +10,30 @@ use App\Models\Lecturer;
 use App\Models\Faculty;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class LecturerController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('view_lecturers');
         $lecturers = Lecturer::with('faculty')->latest()->get();
         return view('dashboard.admin.lecturers.index', compact('lecturers'));
     }
 
     public function show(Lecturer $lecturer)
     {
+        $this->authorize('view_lecturers');
         return view('dashboard.admin.lecturers.show', compact('lecturer'));
     }
 
     public function create()
     {
+        $this->authorize('create_lecturers');
         $faculties = Faculty::all();
         $courses = Course::all();
         $buildings = Building::all();
@@ -66,6 +72,7 @@ class LecturerController extends Controller
 
     public function edit(Lecturer $lecturer)
     {
+        $this->authorize('edit_lecturers');
         $faculties = Faculty::all();
         $courses = Course::all();
         $buildings = Building::all();
@@ -94,6 +101,7 @@ class LecturerController extends Controller
 
     public function destroy(Lecturer $lecturer)
     {
+        $this->authorize('delete_lecturers');
         if ($lecturer->photo) {
             Storage::disk('public')->delete($lecturer->photo);
         }

@@ -5,19 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFacultyRequest;
 use App\Http\Requests\UpdateFacultyRequest;
 use App\Models\Faculty;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class FacultyController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('view_faculties');
         $faculties = Faculty::latest()->get();
         return view('dashboard.admin.faculties.index', compact('faculties'));
     }
 
     public function create()
     {
+        $this->authorize('create_faculties');
         return view('dashboard.admin.faculties.create');
     }
 
@@ -36,6 +41,7 @@ class FacultyController extends Controller
 
     public function edit(Faculty $faculty)
     {
+        $this->authorize('edit_faculties');
         return view('dashboard.admin.faculties.edit', compact('faculty'));
     }
 
@@ -59,6 +65,7 @@ class FacultyController extends Controller
 
     public function destroy(Faculty $faculty)
     {
+        $this->authorize('delete_faculties');
         if ($faculty->image) {
             Storage::disk('public')->delete($faculty->image);
         }
