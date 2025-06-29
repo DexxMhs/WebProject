@@ -105,6 +105,18 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Calon Mahasiswa</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'student-weekly-schedules') active @endif">
+                <a href="{{ route('dashboard.student-weekly-schedules.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Jadwal Kuliah</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'lecturer-weekly-schedules') active @endif">
+                <a href="{{ route('dashboard.lecturer-weekly-schedules.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Jadwal Mengajar</a>
+            </li>
         </ul>
     </div>
 </nav>

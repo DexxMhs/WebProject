@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AcceptStudentRequest;
 use App\Models\ClassModel;
+use App\Models\Role;
 use App\Models\StudentCandidateTemp;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -52,6 +54,9 @@ class CandidateVerificationController extends Controller
 
         $validated['nim'] = $nim;
 
+        // Cari role 'student'
+        $studentRole = Role::where('name', 'student')->firstOrFail();
+
         // Buat Student
         Student::create([
             'user_id' => $candidate->user_id,
@@ -74,6 +79,12 @@ class CandidateVerificationController extends Controller
             'approved_at' => Carbon::now(),
         ]);
 
+        // Update Role User
+        $user = User::findOrFail($candidate->user_id);
+
+        $user->update([
+            'role_id' => $studentRole->id,
+        ]);
 
         return redirect()->route('dashboard.student-candidates.index')->with('success', 'Student accepted successfully.');
     }

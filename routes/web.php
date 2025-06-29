@@ -20,9 +20,11 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DegreeLevelController;
+use App\Http\Controllers\LecturerWeeklyScheduleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentProfileController;
 use App\Http\Controllers\StudentRegistrationProgramController;
+use App\Http\Controllers\StudentWeeklyScheduleController;
 use App\Http\Controllers\WeeklyScheduleController;
 
 Route::get('/', function () {
@@ -84,6 +86,8 @@ Route::prefix('dashboard')
         Route::resource('roles', RoleController::class);
         Route::resource('classes', ClassController::class);
         Route::resource('weekly-schedules', WeeklyScheduleController::class);
+        Route::get('student-weekly-schedules', [StudentWeeklyScheduleController::class, 'index'])->name('student-weekly-schedules.index');
+        Route::get('lecturer-weekly-schedules', [LecturerWeeklyScheduleController::class, 'index'])->name('lecturer-weekly-schedules.index');
         Route::get('student-candidates', [CandidateVerificationController::class, 'index'])->name('student-candidates.index');
         Route::get('student-candidates/{candidate}', [CandidateVerificationController::class, 'show'])->name('student-candidates.show');
         Route::get('student-candidates/{candidate}/accept', [CandidateVerificationController::class, 'showAcceptForm'])->name('student-candidates.accept-form');
