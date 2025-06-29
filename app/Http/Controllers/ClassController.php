@@ -7,17 +7,21 @@ use App\Models\StudyProgram;
 use App\Models\AcademicSemester;
 use App\Http\Requests\StoreClassRequest;
 use App\Http\Requests\UpdateClassRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ClassController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
+        $this->authorize('view_classes');
         $classes = ClassModel::with(['studyProgram', 'academicSemester'])->latest()->get();
         return view('dashboard.admin.classes.index', compact('classes'));
     }
 
     public function create()
     {
+        $this->authorize('create_classes');
         $studyPrograms = StudyProgram::all();
         $academicSemesters = AcademicSemester::all();
 
@@ -33,6 +37,7 @@ class ClassController extends Controller
 
     public function edit(ClassModel $class)
     {
+        $this->authorize('edit_classes');
         $studyPrograms = StudyProgram::all();
         $academicSemesters = AcademicSemester::all();
 
@@ -48,6 +53,7 @@ class ClassController extends Controller
 
     public function destroy(ClassModel $class)
     {
+        $this->authorize('delete_classes');
         $class->delete();
 
         return redirect()->route('dashboard.classes.index')->with('success', 'Class deleted successfully.');

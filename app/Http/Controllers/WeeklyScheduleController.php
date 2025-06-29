@@ -9,17 +9,21 @@ use App\Models\Lecturer;
 use App\Models\Room;
 use App\Http\Requests\StoreWeeklyScheduleRequest;
 use App\Http\Requests\UpdateWeeklyScheduleRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class WeeklyScheduleController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
+        $this->authorize('view_weekly-schedules');
         $schedules = WeeklySchedule::with(['class', 'course', 'lecturer', 'room'])->latest()->get();
         return view('dashboard.admin.weekly-schedules.index', compact('schedules'));
     }
 
     public function create()
     {
+        $this->authorize('create_weekly-schedules');
         $classes = ClassModel::all();
         $courses = Course::all();
         $lecturers = Lecturer::all();
@@ -37,6 +41,7 @@ class WeeklyScheduleController extends Controller
 
     public function edit(WeeklySchedule $weeklySchedule)
     {
+        $this->authorize('edit_weekly-schedules');
         $classes = ClassModel::all();
         $courses = Course::all();
         $lecturers = Lecturer::all();
@@ -54,6 +59,7 @@ class WeeklyScheduleController extends Controller
 
     public function destroy(WeeklySchedule $weeklySchedule)
     {
+        $this->authorize('delete_weekly-schedules');
         $weeklySchedule->delete();
 
         return redirect()->route('dashboard.weekly-schedules.index')->with('success', 'Weekly schedule deleted successfully.');

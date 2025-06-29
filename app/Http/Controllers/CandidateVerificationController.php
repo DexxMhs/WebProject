@@ -8,26 +8,32 @@ use App\Models\Role;
 use App\Models\StudentCandidateTemp;
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 class CandidateVerificationController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('view_student-candidates');
         $candidates = StudentCandidateTemp::with('user')->latest()->get();
         return view('dashboard.admin.candidates.index', compact('candidates'));
     }
 
     public function show($id)
     {
+        $this->authorize('show_student-candidates');
         $candidate = StudentCandidateTemp::with(['user', 'parents', 'schools'])->findOrFail($id);
         return view('dashboard.admin.candidates.show', compact('candidate'));
     }
 
     public function showAcceptForm(StudentCandidateTemp $candidate)
     {
+        $this->authorize('accept-form_student-candidates');
         // Ambil kelas hanya untuk program studi yang sesuai
         $classes = ClassModel::where('study_program_id', $candidate->study_program_id)->get();
 
@@ -91,6 +97,7 @@ class CandidateVerificationController extends Controller
 
     public function decline($id)
     {
+        $this->authorize('decline_student-candidates');
         $candidate = StudentCandidateTemp::findOrFail($id);
 
         $candidate->update([
