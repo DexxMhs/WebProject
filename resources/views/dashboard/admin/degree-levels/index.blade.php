@@ -44,8 +44,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <strong class="card-title mb-0" style="">Data Gelar</strong>
-
-                        <a href="{{ route('dashboard.degree-levels.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @can('create_degree-levels')
+                            <a href="{{ route('dashboard.degree-levels.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -74,15 +75,19 @@
                                         <td style="max-width: 600px">{{ $degree->description }}</td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 5px;">
-                                                <a href="{{ route('dashboard.degree-levels.edit', $degree) }}"
-                                                    class="btn btn-outline-primary btn-sm">Edit</a>
-                                                <form action="{{ route('dashboard.degree-levels.destroy', $degree) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
-                                                </form>
+                                                @can('edit_degree-levels')
+                                                    <a href="{{ route('dashboard.degree-levels.edit', $degree) }}"
+                                                        class="btn btn-outline-primary btn-sm">Edit</a>
+                                                @endcan
+                                                @can('delete_degree-levels')
+                                                    <form action="{{ route('dashboard.degree-levels.destroy', $degree) }}"
+                                                        method="POST" class="d-inline"
+                                                        onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

@@ -36,4 +36,9 @@ class Building extends Model
     {
         return $this->hasMany(Student::class);
     }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->photo ? asset('storage/' . $this->photo) : null;
+    }
 }

@@ -44,8 +44,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <strong class="card-title mb-0" style="">Data Program Studi</strong>
-
-                        <a href="{{ route('dashboard.study-programs.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @can('create_study-programs')
+                            <a href="{{ route('dashboard.study-programs.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -73,17 +74,23 @@
                                         <td>{{ $program->accreditation ?? '-' }}</td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 5px;">
-                                                <a href="{{ route('dashboard.study-programs.show', $program) }}"
-                                                    class="btn btn-outline-success btn-sm">Show</a>
-                                                <a href="{{ route('dashboard.study-programs.edit', $program) }}"
-                                                    class="btn btn-outline-primary btn-sm">Edit</a>
-                                                <form action="{{ route('dashboard.study-programs.destroy', $program) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
-                                                </form>
+                                                @can('view_study-programs')
+                                                    <a href="{{ route('dashboard.study-programs.show', $program) }}"
+                                                        class="btn btn-outline-success btn-sm">Show</a>
+                                                @endcan
+                                                @can('edit_study-programs')
+                                                    <a href="{{ route('dashboard.study-programs.edit', $program) }}"
+                                                        class="btn btn-outline-primary btn-sm">Edit</a>
+                                                @endcan
+                                                @can('delete_study-programs')
+                                                    <form action="{{ route('dashboard.study-programs.destroy', $program) }}"
+                                                        method="POST" class="d-inline"
+                                                        onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

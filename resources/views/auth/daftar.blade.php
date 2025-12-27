@@ -1,9 +1,9 @@
 <!-- ngambil dari extend login -->
-@extends('layouts.login-form')
+@extends('auth.layouts.login-form')
 
 @section('login')
     <div class="login-form">
-        <form action="/daftar" method="POST">
+        <form action="{{ route('daftar') }}" method="POST">
             @csrf <!-- CSRF Token Berfungsi unutk mencegah CyberCross dari laravel -->
             <div class="form-group">
                 <label>Nama Lengkap</label>

@@ -35,14 +35,18 @@
 
                 <div style="display: flex; justify-content: center; align-items: center; gap: 7px;">
                     @if ($candidate->registration_status === 'pending')
-                        <a href="{{ route('dashboard.student-candidates.accept-form', $candidate->id) }}"
-                            class="btn btn-outline-success">Approve</a>
+                        @can('accept-form_student-candidates')
+                            <a href="{{ route('dashboard.student-candidates.accept-form', $candidate->id) }}"
+                                class="btn btn-outline-success">Approve</a>
+                        @endcan
 
-                        <form action="{{ route('dashboard.student-candidates.decline', $candidate->id) }}" method="POST"
-                            class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-danger">Decline</button>
-                        </form>
+                        @can('decline_student-candidates')
+                            <form action="{{ route('dashboard.student-candidates.decline', $candidate->id) }}" method="POST"
+                                class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger">Decline</button>
+                            </form>
+                        @endcan
                     @endif
 
                     <a href="{{ route('dashboard.student-candidates.index') }}"

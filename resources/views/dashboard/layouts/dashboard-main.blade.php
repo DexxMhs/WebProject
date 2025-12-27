@@ -231,6 +231,7 @@
     </script>
 
     @yield('scripts')
+    <script src="https://kit.fontawesome.com/5f1e094195.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

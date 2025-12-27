@@ -24,7 +24,7 @@ class ForgotPassword extends Controller
         );
 
         // dd($request->only('email'));
-        // dd($status);
+        // dd($status); //trhetlek
         // dd(Password::ResetLinkSent);
         return $status === Password::ResetLinkSent
             ? back()->with(['status' => 'Email berhasil di kirim ke email anda, silhakan cek email anda'])

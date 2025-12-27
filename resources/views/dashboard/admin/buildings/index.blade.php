@@ -44,8 +44,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <strong class="card-title mb-0" style="">Data Gedung Kampus</strong>
-
-                        <a href="{{ route('dashboard.buildings.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @can('create_buildings')
+                            <a href="{{ route('dashboard.buildings.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -84,15 +85,19 @@
                                         <td>{{ $building->address }}</td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 5px;">
-                                                <a href="{{ route('dashboard.buildings.edit', $building) }}"
-                                                    class="btn btn-outline-primary btn-sm">Edit</a>
-                                                <form action="{{ route('dashboard.buildings.destroy', $building) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
-                                                </form>
+                                                @can('view_buildings')
+                                                    <a href="{{ route('dashboard.buildings.edit', $building) }}"
+                                                        class="btn btn-outline-primary btn-sm">Edit</a>
+                                                @endcan
+                                                @can('delete_buildings')
+                                                    <form action="{{ route('dashboard.buildings.destroy', $building) }}"
+                                                        method="POST" class="d-inline"
+                                                        onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

@@ -44,8 +44,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <strong class="card-title mb-0" style="">Data Permission</strong>
-
-                        <a href="{{ route('dashboard.permissions.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @can('create_permissions')
+                            <a href="{{ route('dashboard.permissions.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -65,14 +66,18 @@
                                         <td>{{ $permission->name }}</td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 5px;">
-                                                <a href="{{ route('dashboard.permissions.edit', $permission) }}"
-                                                    class="btn btn-outline-primary btn-sm">Edit</a>
-                                                <form action="{{ route('dashboard.permissions.destroy', $permission) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                @can('edit_permissions')
+                                                    <a href="{{ route('dashboard.permissions.edit', $permission) }}"
+                                                        class="btn btn-outline-primary btn-sm">Edit</a>
+                                                @endcan
+                                                @can('delete_permissions')
+                                                    <form action="{{ route('dashboard.permissions.destroy', $permission) }}"
+                                                        method="POST" class="d-inline"
+                                                        onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                    @endcan
                                                 </form>
                                             </div>
                                         </td>

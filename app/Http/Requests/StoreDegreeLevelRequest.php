@@ -25,7 +25,7 @@ class StoreDegreeLevelRequest extends FormRequest
         return [
             'code' => ['required', 'max:10', Rule::unique('degree_levels')->whereNull('deleted_at')],
             'name' => 'required|string|max:50',
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'duration_years' => 'nullable|integer|min:1|max:10',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
@@ -41,7 +41,6 @@ class StoreDegreeLevelRequest extends FormRequest
             'name.required' => 'Degree level name is required.',
             'name.max' => 'Name must not exceed 50 characters.',
 
-            'description.max' => 'Description must not exceed 255 characters.',
 
             'duration_years.integer' => 'Duration must be a number.',
             'duration_years.min' => 'Duration must be at least 1 year.',

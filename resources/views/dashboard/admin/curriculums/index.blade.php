@@ -44,8 +44,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <strong class="card-title mb-0" style="">Data Kurikulum</strong>
-
-                        <a href="{{ route('dashboard.curriculums.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @can('create_curriculums')
+                            <a href="{{ route('dashboard.curriculums.create') }}" class="btn btn-primary mt-0">Tambah</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -67,15 +68,19 @@
                                         <td>{{ $curriculum->academicSemester->name ?? '-' }}</td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 5px;">
-                                                <a href="{{ route('dashboard.curriculums.edit', $curriculum) }}"
-                                                    class="btn btn-outline-primary btn-sm">Edit</a>
-                                                <form action="{{ route('dashboard.curriculums.destroy', $curriculum) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
-                                                </form>
+                                                @can('edit_curriculums')
+                                                    <a href="{{ route('dashboard.curriculums.edit', $curriculum) }}"
+                                                        class="btn btn-outline-primary btn-sm">Edit</a>
+                                                @endcan
+                                                @can('delete_curriculums')
+                                                    <form action="{{ route('dashboard.curriculums.destroy', $curriculum) }}"
+                                                        method="POST" class="d-inline"
+                                                        onsubmit="return confirm('Apa kamu yakin akan menghapus ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

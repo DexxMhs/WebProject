@@ -73,8 +73,10 @@
                                         </td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 5px;">
-                                                <a href="{{ route('dashboard.student-candidates.show', $candidate->id) }}"
-                                                    class="btn btn-sm btn-outline-success">Detail</a>
+                                                @can('show_student-candidates')
+                                                    <a href="{{ route('dashboard.student-candidates.show', $candidate->id) }}"
+                                                        class="btn btn-sm btn-outline-success">Detail</a>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

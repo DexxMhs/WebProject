@@ -4,7 +4,7 @@ return [
     [
         'label' => 'Data Diri',
         'segment' => 'student-profile',
-        'icon' => 'fa-user',
+        'icon' => 'fa fa-user',
         'permission' => 'guest_profile',
         'routes' => [
             ['label' => 'Index', 'route' => 'dashboard.student-profile', 'permission' => 'guest_profile'],
@@ -22,7 +22,7 @@ return [
     [
         'label' => 'Data Gelar',
         'segment' => 'degree-levels',
-        'icon' => '🔑',
+        'icon' => 'fa-solid fa-graduation-cap',
         'permission' => 'view_degree-levels',
         'routes' => [
             ['label' => 'Index', 'route' => 'dashboard.degree-levels.index', 'permission' => 'view_degree-levels'],

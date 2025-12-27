@@ -1,11 +1,11 @@
-@extends('login.layouts.login-form')
+@extends('auth.layouts.login-form')
 
 @section('login')
     <div class="login-form">
         <form action="{{ route('password.update') }}" method="POST">
             @csrf
 
-            @include('partials.message')
+            @include('auth.partials.message')
 
             <input type="hidden" name="token" value="{{ $token }}">
             <input type="hidden" name="email" value="{{ request('email') }}">

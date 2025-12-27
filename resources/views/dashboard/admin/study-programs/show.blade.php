@@ -69,8 +69,10 @@
                 </table>
                 <hr>
                 <div class="mt-4" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <a href="{{ route('dashboard.study-programs.edit', $studyProgram) }}"
-                        class="btn btn-outline-primary">Edit</a>
+                    @can('edit_study-programs')
+                        <a href="{{ route('dashboard.study-programs.edit', $studyProgram) }}"
+                            class="btn btn-outline-primary">Edit</a>
+                    @endcan
                     <a href="{{ route('dashboard.study-programs.index') }}" class="btn btn-outline-secondary">Back</a>
                 </div>
             </div>

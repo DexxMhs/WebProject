@@ -15,7 +15,7 @@
                         @if ($menu['permission'] == $item['permission'])
                             <li class="@if (Request::segment(2) == $menu['segment']) active @endif">
                                 <a href="{{ route($item['route']) }}" class="dropdown-toggle"><i
-                                        class="menu-icon fa fa-id-badge">
+                                        class="menu-icon fa-regular fa-bookmark }}">
                                     </i>{{ $menu['label'] }}</a>
                             </li>
                         @endif

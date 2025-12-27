@@ -55,7 +55,9 @@
                 </ul>
                 <hr>
                 <div class="mt-4" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <a href="{{ route('dashboard.lecturers.edit', $lecturer) }}" class="btn btn-outline-primary">Edit</a>
+                    @can('edit_lecturers')
+                        <a href="{{ route('dashboard.lecturers.edit', $lecturer) }}" class="btn btn-outline-primary">Edit</a>
+                    @endcan
                     <a href="{{ route('dashboard.lecturers.index') }}" class="btn btn-outline-secondary">Back</a>
                 </div>
             </div>

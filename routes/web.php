@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AcademicSemesterController;
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\BuildingWebController;
 use App\Http\Controllers\CandidateVerificationController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SemesterController;
@@ -20,6 +22,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DegreeLevelController;
+use App\Http\Controllers\DegreeLevelWebController;
+use App\Http\Controllers\FacultyWebController;
 use App\Http\Controllers\LecturerWeeklyScheduleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionRoleController;
@@ -27,19 +31,23 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentProfileController;
 use App\Http\Controllers\StudentRegistrationProgramController;
 use App\Http\Controllers\StudentWeeklyScheduleController;
+use App\Http\Controllers\StudyProgramWebController;
+use App\Http\Controllers\WebController;
 use App\Http\Controllers\WeeklyScheduleController;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/prg', function () {
-    return view('prg');
-})->name('prg');
+Route::get('/program-studi/{id}', [StudyProgramWebController::class, 'show'])->name('web-study-program.show');
 
-Route::get('/fk', function () {
-    return view('fk');
-})->name('fk');
+Route::get('/program', [DegreeLevelWebController::class, 'index'])->name('web-degree-levels.index');
+
+Route::get('/buildings', [BuildingWebController::class, 'index'])->name('web-buildings.index');
+
+Route::get('/sambutan-rektor', [WebController::class, 'rektorIndex'])->name('sabutan-rektor');
+Route::get('/visi', [WebController::class, 'visiIndex'])->name('visi');
+Route::get('/misi', [WebController::class, 'missionIndex'])->name('misi');
+
+
 // Bisa di isi dengan halaman HOMEPAGE
 
 
@@ -55,7 +63,7 @@ Route::get('/reset-password/{token}', [ResetPassword::class, 'resetpassword'])->
 Route::post('/reset-password', [ResetPassword::class, 'storepassword'])->middleware('guest')->name('password.update');
 
 // Rute Menuju ke halaman DAFTAR melalui Controller
-Route::get('/daftar', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/daftar', [RegisterController::class, 'index'])->name('daftar');
 
 // Rute request ketika user memasukan data validasi
 Route::post('/daftar', [RegisterController::class, 'store']);

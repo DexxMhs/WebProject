@@ -25,13 +25,17 @@ class RegisterController extends Controller
             'password' => 'required|min:3'
         ]);
 
-        // User Create adalah untuk membuat user baru yang akan di kirim ke database
-        User::create($validateData);
+        // Enkripsi password (wajib)
+        $validateData['password'] = bcrypt($validateData['password']);
 
-        // Cari role 'student'
+        // Buat user baru dan simpan ke variabel
+        $user = User::create($validateData);
+
+        // Cari role 'guest'
         $guestRole = Role::where('name', 'guest')->firstOrFail();
 
-        User::update([
+        // Update user dengan role_id
+        $user->update([
             'role_id' => $guestRole->id,
         ]);
 
