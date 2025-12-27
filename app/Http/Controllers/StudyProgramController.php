@@ -2,63 +2,93 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\StudyProgram;
+use App\Models\Faculty;
+use App\Models\DegreeLevel;
+use App\Models\Lecturer;
+use App\Http\Requests\StoreStudyProgramRequest;
+use App\Http\Requests\UpdateStudyProgramRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 
 class StudyProgramController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use AuthorizesRequests;
+
     public function index()
     {
-        return view('dashbi');
+        $this->authorize('view_study-programs');
+        $studyPrograms = StudyProgram::with(['faculty', 'degreeLevel', 'headOfProgram'])->latest()->get();
+        return view('dashboard.admin.study-programs.index', compact('studyPrograms'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function show(StudyProgram $studyProgram)
+    {
+        $this->authorize('view_study-programs');
+        $studyProgram->load(['faculty', 'degreeLevel', 'headOfProgram']);
+
+        return view('dashboard.admin.study-programs.show', compact('studyProgram'));
+    }
+
     public function create()
     {
-        //
+        $this->authorize('create_study-programs');
+        $faculties = Faculty::all();
+        $degreeLevels = DegreeLevel::all();
+        $lecturers = Lecturer::all();
+
+        return view('dashboard.admin.study-programs.create', compact('faculties', 'degreeLevels', 'lecturers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreStudyProgramRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('study_programs', 'public');
+        }
+
+        StudyProgram::create($validated);
+
+        return redirect()->route('dashboard.study-programs.index')->with('success', 'Study program created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(StudyProgram $studyProgram)
     {
-        //
+        $this->authorize('edit_study-programs');
+        $faculties = Faculty::all();
+        $degreeLevels = DegreeLevel::all();
+        $lecturers = Lecturer::all();
+
+        return view('dashboard.admin.study-programs.edit', compact('studyProgram', 'faculties', 'degreeLevels', 'lecturers'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(UpdateStudyProgramRequest $request, StudyProgram $studyProgram)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            if ($studyProgram->image) {
+                Storage::disk('public')->delete($studyProgram->image);
+            }
+
+            $validated['image'] = $request->file('image')->store('study_programs', 'public');
+        }
+
+        $studyProgram->update($validated);
+
+        return redirect()->route('dashboard.study-programs.index')->with('success', 'Study program updated successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(StudyProgram $studyProgram)
     {
-        //
-    }
+        $this->authorize('delete_study-programs');
+        if ($studyProgram->image) {
+            Storage::disk('public')->delete($studyProgram->image);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $studyProgram->delete();
+
+        return redirect()->route('dashboard.study-programs.index')->with('success', 'Study program deleted successfully.');
     }
 }

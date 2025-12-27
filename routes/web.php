@@ -1,5 +1,17 @@
 <?php
 
+use App\Http\Controllers\AcademicSemesterController;
+use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\BuildingWebController;
+use App\Http\Controllers\CandidateVerificationController;
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\StudyProgramController;
 use Illuminate\Support\Facades\Route;
@@ -9,20 +21,33 @@ use App\Http\Controllers\DashboardDaftar;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DegreeLevelController;
+use App\Http\Controllers\DegreeLevelWebController;
+use App\Http\Controllers\FacultyWebController;
+use App\Http\Controllers\LecturerWeeklyScheduleController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PermissionRoleController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentProfileController;
+use App\Http\Controllers\StudentRegistrationProgramController;
+use App\Http\Controllers\StudentWeeklyScheduleController;
+use App\Http\Controllers\StudyProgramWebController;
+use App\Http\Controllers\WebController;
+use App\Http\Controllers\WeeklyScheduleController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/program-studi/{id}', [StudyProgramWebController::class, 'show'])->name('web-study-program.show');
+
+Route::get('/program', [DegreeLevelWebController::class, 'index'])->name('web-degree-levels.index');
+
+Route::get('/buildings', [BuildingWebController::class, 'index'])->name('web-buildings.index');
+
+Route::get('/sambutan-rektor', [WebController::class, 'rektorIndex'])->name('sabutan-rektor');
+Route::get('/visi', [WebController::class, 'visiIndex'])->name('visi');
+Route::get('/misi', [WebController::class, 'missionIndex'])->name('misi');
 
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::get('prg', function () {
-    return view('prg');
-})->name('prg');
-
-Route::get('fk', function () {
-    return view('fk');
-})->name('fk');
 // Bisa di isi dengan halaman HOMEPAGE
 
 
@@ -38,7 +63,7 @@ Route::get('/reset-password/{token}', [ResetPassword::class, 'resetpassword'])->
 Route::post('/reset-password', [ResetPassword::class, 'storepassword'])->middleware('guest')->name('password.update');
 
 // Rute Menuju ke halaman DAFTAR melalui Controller
-Route::get('/daftar', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/daftar', [RegisterController::class, 'index'])->name('daftar');
 
 // Rute request ketika user memasukan data validasi
 Route::post('/daftar', [RegisterController::class, 'store']);
@@ -50,9 +75,33 @@ Route::get('/dashboard/home', [DashboardController::class, 'index'])->name('dash
 Route::get('/dashboard/student-profile', [StudentProfileController::class, 'index'])->name('dashboard.student-profile')->middleware('auth');
 Route::post('/dashboard/save-student-candidate', [StudentProfileController::class, 'saveStudentCandidateTemp'])->name('dashboard.saveStudentCandidate')->middleware('auth');
 
-Route::get('/dashboard/student-registration', [StudentRegistrationController::class, 'index'])->name('dashboard.student-registration')->middleware('auth');
 
-
-// Admin route
-Route::get('/dashboard/study-programs', [StudyProgramController::class, 'index'])->name('dashboard.admin.study-programs')->middleware('auth');
-Route::get('/dashboard/study-programs/create', [StudyProgramController::class, 'create'])->name('dashboard.study-programs.create')->middleware('auth');
+// // Admin route
+Route::prefix('dashboard')
+    ->name('dashboard.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('student-registration', [StudentRegistrationProgramController::class, 'create'])->name('student-registration');
+        Route::post('student-registration', [StudentRegistrationProgramController::class, 'store'])->name('student-registration.store');
+        Route::resource('degree-levels', DegreeLevelController::class);
+        Route::resource('faculties', FacultyController::class);
+        Route::resource('lecturers', LecturerController::class);
+        Route::resource('study-programs', StudyProgramController::class);
+        Route::resource('semesters', SemesterController::class);
+        Route::resource('academic-semesters', AcademicSemesterController::class);
+        Route::resource('courses', CourseController::class);
+        Route::resource('curriculums', CurriculumController::class);
+        Route::resource('buildings', BuildingController::class);
+        Route::resource('rooms', RoomController::class);
+        Route::resource('roles', RoleController::class);
+        Route::resource('classes', ClassController::class);
+        Route::resource('weekly-schedules', WeeklyScheduleController::class);
+        Route::resource('permissions', PermissionController::class);
+        Route::get('student-weekly-schedules', [StudentWeeklyScheduleController::class, 'index'])->name('student-weekly-schedules.index');
+        Route::get('lecturer-weekly-schedules', [LecturerWeeklyScheduleController::class, 'index'])->name('lecturer-weekly-schedules.index');
+        Route::get('student-candidates', [CandidateVerificationController::class, 'index'])->name('student-candidates.index');
+        Route::get('student-candidates/{candidate}', [CandidateVerificationController::class, 'show'])->name('student-candidates.show');
+        Route::get('student-candidates/{candidate}/accept', [CandidateVerificationController::class, 'showAcceptForm'])->name('student-candidates.accept-form');
+        Route::put('student-candidates/{candidate}/accept', [CandidateVerificationController::class, 'accept'])->name('student-candidates.accept');
+        Route::post('student-candidates/{candidate}/decline', [CandidateVerificationController::class, 'decline'])->name('student-candidates.decline');
+    });

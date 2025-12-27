@@ -8,7 +8,22 @@
                 <a href="{{ route('dashboard.home') }}" class="dropdown-toggle"><i class="menu-icon fa fa-laptop">
                     </i>Beranda</a>
             </li>
-            <li class="@if (Request::segment(2) == 'student-profile') active @endif">
+
+            @foreach (config('menu') as $menu)
+                @permission($menu['permission'])
+                    @foreach ($menu['routes'] as $item)
+                        @if ($menu['permission'] == $item['permission'])
+                            <li class="@if (Request::segment(2) == $menu['segment']) active @endif">
+                                <a href="{{ route($item['route']) }}" class="dropdown-toggle"><i
+                                        class="menu-icon fa-regular fa-bookmark }}">
+                                    </i>{{ $menu['label'] }}</a>
+                            </li>
+                        @endif
+                    @endforeach
+                @endpermission
+            @endforeach
+
+            {{-- <li class="@if (Request::segment(2) == 'student-profile') active @endif">
                 <!-- Belom gua isi ini bray halaman menuanya -->
                 <a href="{{ route('dashboard.student-profile') }}" class="dropdown-toggle"><i
                         class="menu-icon fa fa-id-badge">
@@ -21,6 +36,108 @@
                         class="menu-icon fa fa fa-id-card-o">
                     </i>Data Registrasi</a>
             </li>
+
+            <li class="@if (Request::segment(2) == 'degree-levels') active @endif">
+                <a href="{{ route('dashboard.degree-levels.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Gelar</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'faculties') active @endif">
+                <a href="{{ route('dashboard.faculties.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Fakultas</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'lecturers') active @endif">
+                <a href="{{ route('dashboard.lecturers.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Dosen</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'study-programs') active @endif">
+                <a href="{{ route('dashboard.study-programs.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Program Studi</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'semesters') active @endif">
+                <a href="{{ route('dashboard.semesters.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Semester</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'academic-semesters') active @endif">
+                <a href="{{ route('dashboard.academic-semesters.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Semester Akademik</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'courses') active @endif">
+                <a href="{{ route('dashboard.courses.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Mata Kuliah</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'curriculums') active @endif">
+                <a href="{{ route('dashboard.curriculums.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Kurikulum</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'buildings') active @endif">
+                <a href="{{ route('dashboard.buildings.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Gedung Kampus</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'rooms') active @endif">
+                <a href="{{ route('dashboard.rooms.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Ruang Kelas</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'roles') active @endif">
+                <a href="{{ route('dashboard.roles.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Role</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'classes') active @endif">
+                <a href="{{ route('dashboard.classes.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Kelas</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'weekly-schedules') active @endif">
+                <a href="{{ route('dashboard.weekly-schedules.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Jadwal Mingguan</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'permissions') active @endif">
+                <a href="{{ route('dashboard.permissions.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Permission</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'student-candidates') active @endif">
+                <a href="{{ route('dashboard.student-candidates.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Data Calon Mahasiswa</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'student-weekly-schedules') active @endif">
+                <a href="{{ route('dashboard.student-weekly-schedules.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Jadwal Kuliah</a>
+            </li>
+
+            <li class="@if (Request::segment(2) == 'lecturer-weekly-schedules') active @endif">
+                <a href="{{ route('dashboard.lecturer-weekly-schedules.index') }}" class="dropdown-toggle"><i
+                        class="menu-icon fa fa fa-id-card-o">
+                    </i>Jadwal Mengajar</a>
+            </li> --}}
         </ul>
     </div>
 </nav>

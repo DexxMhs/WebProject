@@ -17,6 +17,7 @@
 @endsection
 
 @section('container')
+    @include('dashboard.partials._message')
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-lg-12">
@@ -27,33 +28,31 @@
                                 <img class="my-auto" src="{{ asset('images/student-registration.jpeg') }}" alt="">
                             </div>
                             <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="company" class="form-control-label">Program</label>
-                                    <input type="text" id="company" placeholder="Enter your company name"
-                                        class="form-control" />
-                                </div>
-                                <div class="form-group"><label for="vat" class="form-control-label">VAT</label><input
-                                        type="text" id="vat" placeholder="DE1234567890" class="form-control" />
-                                </div>
-                                <div class="form-group"><label for="street"
-                                        class="form-control-label">Street</label><input type="text" id="street"
-                                        placeholder="Enter street name" class="form-control" /></div>
-                                <div class="row form-group">
-                                    <div class="col-8">
-                                        <div class="form-group"><label for="city"
-                                                class="form-control-label">City</label><input type="text" id="city"
-                                                placeholder="Enter your city" class="form-control" />
+                                @if (empty($candidate->study_program_id))
+                                    @livewire('registration-study-program-form')
+                                @else
+                                    @if ($candidate->registration_status == 'pending')
+                                        <div class="alert alert-warning d-flex align-items-center" role="alert"
+                                            style="gap: 10px;">
+                                            <i class="bi bi-hourglass-split me-2" style="font-size: 1.5rem;"></i>
+                                            <div>
+                                                <strong>Registrasi Sedang Diproses</strong><br>
+                                                Harap tunggu konfirmasi dari administrator. Bila Disetujui maka akan
+                                                langsung ke halaman mahasiswa.
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="form-group"><label for="postal-code" class="form-control-label">Postal
-                                                Code</label><input type="text" id="postal-code" placeholder="Postal Code"
-                                                class="form-control" /></div>
-                                    </div>
-                                </div>
-                                <div class="form-group"><label for="country"
-                                        class="form-control-label">Country</label><input type="text" id="country"
-                                        placeholder="Country name" class="form-control" /></div>
+                                    @elseif ($candidate->registration_status == 'declined')
+                                        <div class="alert alert-danger  d-flex align-items-center" role="alert"
+                                            style="gap: 10px;">
+                                            <i class="bi bi-hourglass-split me-2" style="font-size: 1.5rem;"></i>
+                                            <div>
+                                                <strong>Registrasi Ditolak</strong><br>
+                                                Mohon maaf, pendaftaran Anda telah ditolak. Silakan hubungi admin untuk
+                                                informasi lebih lanjut atau lakukan pendaftaran ulang jika diizinkan.
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>

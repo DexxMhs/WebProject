@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>UBSI | {{ $title }}</title>
+    <title>UBSI | @yield('title')</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,6 +93,18 @@
                 opacity: 0.7;
                 transform: translateX(0);
             }
+        }
+
+        .right-panel {
+            min-height: calc(100vh - 55px);
+        }
+
+        .req-i {
+            color: #dc3545;
+        }
+
+        .navbar .navbar-nav li>a .menu-icon {
+            width: 35px;
         }
     </style>
 </head>
@@ -219,6 +231,7 @@
     </script>
 
     @yield('scripts')
+    <script src="https://kit.fontawesome.com/5f1e094195.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

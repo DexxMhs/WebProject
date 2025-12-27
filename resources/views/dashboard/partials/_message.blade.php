@@ -21,6 +21,29 @@
     </div>
 @endif
 
+@if (!empty(session('warning')))
+    <div id="success-alert" class="sufee-alert alert with-close alert-warning alert-dismissible fade show"
+        style="position: fixed; top: 20px; right: 20px; z-index: 2000; opacity: 0.7; max-width: 300px;
+       display: flex; align-items: center; transition: opacity 0.5s ease; animation: slideFadeIn 0.5s ease;">
+
+        <!-- Ikon ceklis -->
+        <div style="font-size: 24px; margin-right: 20px;">
+            <i class="fa fa-exclamation-circle"></i>
+        </div>
+
+        <!-- Pesan -->
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span class="badge badge-pill badge-warning" style="width: fit-content;">Warning</span>
+            <span style="font-size: 13px;">{{ session('warning') }}</span>
+        </div>
+
+        <!-- Tombol close -->
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-left: auto;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
 @if (!empty($errors->any()))
     <div id="error-alert" class="sufee-alert alert with-close alert-danger alert-dismissible fade show"
         style="position: fixed; top: 20px; right: 20px; z-index: 2000; opacity: 0.7; max-width: 300px;
